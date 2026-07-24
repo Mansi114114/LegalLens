@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Crime · Legal QA Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="ledger-bg"></div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="seal">§</div>
+    <div class="masthead-text">
+      <h1>Crime <span>Legal QA Assistant</span></h1>
+      <p class="tagline">Docket-style answers, drawn from a curated legal knowledge base — not a substitute for a lawyer.</p>
+    </div>
+  </div>
+</header>
+
+<main class="stage">
+
+  <section class="categories" aria-label="Covered legal topics">
+    <span>Covers:</span>
+    <ul id="category-list"></ul>
+  </section>
+
+  <section class="case-log" id="case-log">
+    <div class="entry system">
+      <div class="entry-head">
+        <span class="docket">DOCKET&nbsp;000</span>
+        <span class="tag">Welcome</span>
+      </div>
+      <p>Describe your legal situation in plain language — e.g. <em>“My landlord won't return my security deposit.”</em> I'll classify it and pull the closest guidance on file.</p>
+    </div>
+  </section>
+
+  <form class="composer" id="composer" autocomplete="off">
+    <textarea id="question" placeholder="Type your legal question…" rows="1" required></textarea>
+    <button type="submit" id="send-btn" aria-label="Send question">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 12h16M14 6l6 6-6 6"/>
+      </svg>
+    </button>
+  </form>
+
+  <p class="disclaimer">This tool offers general information only and is not legal advice. For decisions that matter, consult a qualified lawyer.</p>
+
+</main>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

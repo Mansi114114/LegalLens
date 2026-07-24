@@ -1,0 +1,605 @@
+label,text
+Marriage and family,My husband beats me regularly. What can I do?
+Marriage and family,My wife wants a divorce. What are my options?
+Marriage and family,My husband is not giving me maintenance after separation.
+Marriage and family,I want to file for mutual consent divorce.
+Marriage and family,My in-laws are harassing me for dowry.
+Marriage and family,I want custody of my child after separation.
+Marriage and family,My husband is having an affair. What can I do?
+Marriage and family,We are unmarried partners and want to know our legal rights.
+Marriage and family,My spouse is abusive and I want to know my legal options.
+Marriage and family,How do I file for divorce in a contested case?
+Marriage and family,My husband won't let me meet our children after separation.
+Marriage and family,Can I get maintenance if I am not yet divorced?
+Labour dispute,My employer made me resign forcefully.
+Labour dispute,My boss is not paying my salary.
+Labour dispute,I am being forced to work overtime and weekends without extra payment.
+Labour dispute,I was fired without any notice or reason.
+Labour dispute,My employer is not giving me my final settlement after resignation.
+Labour dispute,I am facing sexual harassment at my workplace.
+Labour dispute,My company is not depositing my provident fund (PF) contributions.
+Labour dispute,I was denied maternity leave by my employer.
+Labour dispute,My manager is making me work extra hours with no overtime pay.
+Labour dispute,I was terminated from my job with no severance.
+Labour dispute,My company hasn't paid my dues since I resigned.
+Labour dispute,I'm being harassed by a coworker and HR isn't acting.
+Traffic accident,My bike was hit by a car. What should I do?
+Traffic accident,I was injured in a road accident caused by another driver.
+Traffic accident,My car was damaged in a hit-and-run accident.
+Traffic accident,The other driver is refusing to pay for accident damages.
+Traffic accident,How do I claim insurance after a road accident?
+Traffic accident,I received a traffic challan I believe is unfair.
+Traffic accident,Someone died in an accident I was involved in. What are my legal risks?
+Traffic accident,My insurance company is denying my accident claim.
+Traffic accident,A truck hit my car from behind at a signal.
+Traffic accident,I got into an accident and the other party is refusing to settle.
+Traffic accident,My vehicle insurance claim was rejected after a crash.
+Traffic accident,I was booked for a traffic violation I didn't commit.
+Debt dispute,My friend refuses to return borrowed money.
+Debt dispute,A company is not refunding money I paid in advance.
+Debt dispute,I am being harassed by loan recovery agents.
+Debt dispute,Someone issued me a cheque that bounced.
+Debt dispute,I can't repay my personal loan and the bank is threatening legal action.
+Debt dispute,My business partner owes me money and won't pay.
+Debt dispute,I lent money without any written agreement. Can I still recover it?
+Debt dispute,I'm being asked to pay a debt that isn't mine.
+Debt dispute,I gave someone a personal loan and they stopped responding.
+Debt dispute,A collection agency keeps calling me about a debt I already paid.
+Debt dispute,My cheque bounced and now I'm being threatened with legal action.
+Debt dispute,A vendor hasn't paid an invoice for months.
+Criminal defence,Someone filed a false FIR against me.
+Criminal defence,I have been falsely accused of theft.
+Criminal defence,Police are threatening to arrest me without a warrant.
+Criminal defence,I was arrested and don't know my rights.
+Criminal defence,I need to apply for bail. What is the process?
+Criminal defence,Someone is threatening to file a false case against me.
+Criminal defence,I was assaulted by someone. What legal action can I take?
+Criminal defence,I received a police summons. What should I do?
+Criminal defence,I'm being falsely implicated in a criminal case.
+Criminal defence,The police called me in for questioning about a crime I didn't commit.
+Criminal defence,I need help understanding the charges filed against me.
+Criminal defence,I was detained by police and don't know what happens next.
+Property dispute,Someone has occupied my land illegally.
+Property dispute,My neighbour is threatening me over a property boundary dispute.
+Property dispute,My siblings are refusing to give me my share of ancestral property.
+Property dispute,A builder is delaying possession of my flat.
+Property dispute,My tenant is refusing to vacate the property.
+Property dispute,Someone forged documents to sell my property.
+Property dispute,I want to challenge a will that excluded me unfairly.
+Property dispute,My property was sold without my consent by a family member.
+Property dispute,My cousin is claiming rights over property that belongs to me.
+Property dispute,A construction company built on part of my plot without permission.
+Property dispute,There's a dispute over inherited land between family members.
+Property dispute,My tenant stopped paying rent and won't leave.
+Consumer complaint,I bought a defective phone.
+Consumer complaint,An online store refuses to refund a cancelled order.
+Consumer complaint,I was overcharged by a service provider.
+Consumer complaint,A builder delivered a flat with major construction defects.
+Consumer complaint,I was sold a fake or counterfeit product.
+Consumer complaint,An airline cancelled my flight and won't refund me.
+Consumer complaint,A gym or club is not honoring my membership refund.
+Consumer complaint,I was misled by false advertising into buying a product.
+Consumer complaint,A company sold me a product that doesn't work as advertised.
+Consumer complaint,I paid for a service that was never delivered.
+Consumer complaint,An e-commerce site is ignoring my return request.
+Consumer complaint,I was charged hidden fees I never agreed to.
+Cybercrime,Someone hacked my social media account.
+Cybercrime,I lost money in an online banking fraud.
+Cybercrime,Someone is blackmailing me with my private photos.
+Cybercrime,I received a phishing message and lost money.
+Cybercrime,Someone created a fake profile impersonating me online.
+Cybercrime,I am being cyberstalked by someone online.
+Cybercrime,My identity was used to open a fraudulent online account.
+Cybercrime,I received threatening messages on WhatsApp or social media.
+Cybercrime,My email account was compromised and used for fraud.
+Cybercrime,Someone is threatening me online and demanding money.
+Cybercrime,I clicked a suspicious link and my bank account was emptied.
+Cybercrime,A scammer used my photos to create a fake dating profile.
+Medical negligence,The doctor gave the wrong treatment.
+Medical negligence,A hospital refused emergency treatment to a patient.
+Medical negligence,I suffered complications due to a botched surgery.
+Medical negligence,A clinic overcharged me for unnecessary tests.
+Medical negligence,My newborn suffered injury due to hospital negligence.
+Medical negligence,A pharmacist gave me the wrong medicine.
+Medical negligence,I was not informed about risks before a medical procedure.
+Medical negligence,A hospital is withholding my medical records.
+Medical negligence,I was given the wrong medication dosage at a hospital.
+Medical negligence,A surgeon operated on the wrong body part.
+Medical negligence,My relative died due to what seems like hospital negligence.
+Medical negligence,A lab gave me an incorrect test result that affected my treatment.
+Housing / tenancy,My landlord is refusing to return my security deposit.
+Housing / tenancy,My landlord is trying to evict me without notice.
+Housing / tenancy,My landlord won't do necessary repairs in the rented house.
+Housing / tenancy,I want to break my rental lease early.
+Housing / tenancy,My landlord is charging rent higher than what's in the agreement.
+Housing / tenancy,My landlord is entering my rented home without permission.
+Housing / tenancy,I'm being asked to vacate my rented home immediately.
+Housing / tenancy,My housing society is not addressing maintenance issues.
+Housing / tenancy,My landlord keeps increasing rent without notice.
+Housing / tenancy,I was locked out of my rented apartment by the landlord.
+Housing / tenancy,The rental agreement has unfair clauses I didn't notice.
+Housing / tenancy,My roommate broke the lease and I'm stuck with the deposit issue.
+Education dispute,My college is not giving me my certificates.
+Education dispute,A school is refusing to refund my child's fees after withdrawal.
+Education dispute,I was expelled from college without a fair hearing.
+Education dispute,My university is delaying issuing my degree or marksheet.
+Education dispute,A coaching institute is refusing to refund fees.
+Education dispute,I faced ragging or harassment in my college.
+Education dispute,My child was denied school admission unfairly.
+Education dispute,I was falsely accused of exam malpractice.
+Education dispute,My scholarship was cancelled without explanation.
+Education dispute,The school is not addressing bullying against my child.
+Education dispute,I was wrongly marked absent and it's affecting my grades.
+Education dispute,The university won't let me transfer my credits.
+Marriage and family,my husband beats me what should i do
+Marriage and family,wife wants divorce what are my options
+Marriage and family,husband not paying maintenance after we separated
+Marriage and family,how to file mutual consent divorce
+Marriage and family,in laws harassing me for dowry money
+Marriage and family,want custody of my kids after separation
+Marriage and family,husband cheating on me what can i do
+Marriage and family,we live together unmarried what are our rights
+Marriage and family,my husband abandoned me and my kids
+Marriage and family,need a protection order from domestic violence
+Marriage and family,is my marriage valid if not registered
+Marriage and family,ex wont let me meet my children
+Marriage and family,how do i adopt a child legally
+Marriage and family,in laws forcing me out of the house
+Marriage and family,my wife left me and took the kids
+Marriage and family,can i get alimony from my husband
+Marriage and family,husband threatens me when he drinks
+Marriage and family,want to divorce my husband mutually
+Labour dispute,boss fired me with no notice
+Labour dispute,company not paying my salary on time
+Labour dispute,forced to work overtime with no extra pay
+Labour dispute,denied maternity leave by my company
+Labour dispute,employer not giving final settlement
+Labour dispute,facing harassment at my workplace
+Labour dispute,company not depositing my pf
+Labour dispute,no written contract from my employer
+Labour dispute,getting paid below minimum wage
+Labour dispute,got demoted with no explanation
+Labour dispute,fired during probation unfairly
+Labour dispute,hurt at work and employer wont help
+Labour dispute,company wont give my relieving letter
+Labour dispute,boss made me resign against my will
+Labour dispute,my manager is forcing me to quit
+Labour dispute,not getting paid for weekend shifts
+Labour dispute,terminated without any reason given
+Labour dispute,workplace is not safe and i got injured
+Traffic accident,bike hit by a car what do i do
+Traffic accident,injured in road accident by another driver
+Traffic accident,car damaged in hit and run
+Traffic accident,other driver wont pay for damages
+Traffic accident,how to claim insurance after accident
+Traffic accident,got an unfair traffic challan
+Traffic accident,someone died in accident i was in
+Traffic accident,insurance company denying my accident claim
+Traffic accident,hit a pedestrian while driving
+Traffic accident,license suspended after accident
+Traffic accident,other party wont file police report
+Traffic accident,my car got towed after accident
+Traffic accident,injured as a passenger in accident
+Traffic accident,traffic police gave me wrong challan
+Traffic accident,got in an accident on my bike
+Traffic accident,car accident and other driver fled
+Traffic accident,who pays for damage in a car crash
+Debt dispute,friend wont return money i lent him
+Debt dispute,company not refunding advance payment
+Debt dispute,loan recovery agents harassing me
+Debt dispute,cheque bounced that someone gave me
+Debt dispute,cant repay loan bank threatening legal action
+Debt dispute,business partner owes me money
+Debt dispute,lent money with no agreement can i recover it
+Debt dispute,being asked to pay debt that isnt mine
+Debt dispute,co signed loan and person stopped paying
+Debt dispute,company wont return my deposit
+Debt dispute,being sued for debt already paid
+Debt dispute,credit card charged for transactions i didnt make
+Debt dispute,want to recover money from someone abroad
+Debt dispute,moneylender charging illegal interest
+Debt dispute,someone borrowed money and wont pay back
+Debt dispute,getting threatening calls about a loan
+Criminal defence,someone filed false fir against me
+Criminal defence,falsely accused of theft
+Criminal defence,police threatening to arrest me no warrant
+Criminal defence,arrested and dont know my rights
+Criminal defence,how to apply for bail
+Criminal defence,someone threatening to file false case
+Criminal defence,assaulted by someone what can i do
+Criminal defence,got a police summons what now
+Criminal defence,being investigated for crime i didnt do
+Criminal defence,phone seized by police no warrant
+Criminal defence,asked to testify as a witness
+Criminal defence,case dismissed but still on my record
+Criminal defence,notice to appear in court but im away
+Criminal defence,police pressuring me to confess
+Criminal defence,cops trying to arrest me without proof
+Criminal defence,i got falsely accused of a crime
+Criminal defence,need bail help urgently
+Property dispute,someone occupied my land illegally
+Property dispute,neighbor threatening me over property boundary
+Property dispute,siblings wont give my share of property
+Property dispute,builder delaying possession of my flat
+Property dispute,tenant refusing to vacate my property
+Property dispute,someone forged documents to sell my property
+Property dispute,want to challenge a will that excluded me
+Property dispute,property sold without my consent
+Property dispute,co owner wants to sell but i disagree
+Property dispute,want to partition ancestral property
+Property dispute,property tax has wrong owner name
+Property dispute,contractor did bad construction work
+Property dispute,my rented property is being sold
+Property dispute,someone using fake will to claim my property
+Property dispute,neighbor encroaching on my land
+Property dispute,brother trying to sell our fathers house
+Consumer complaint,bought a defective phone
+Consumer complaint,online store wont refund cancelled order
+Consumer complaint,overcharged by a service provider
+Consumer complaint,builder delivered flat with construction defects
+Consumer complaint,sold a fake product
+Consumer complaint,airline cancelled flight wont refund
+Consumer complaint,gym wont refund my membership
+Consumer complaint,misled by false advertising
+Consumer complaint,ecommerce site sent wrong product
+Consumer complaint,warranty claim rejected for no reason
+Consumer complaint,charged hidden fees not disclosed
+Consumer complaint,real estate agent lied about the property
+Consumer complaint,insurance claim rejected on a technicality
+Consumer complaint,subscription charging me after i cancelled
+Consumer complaint,store wont give refund for bad product
+Consumer complaint,company sold me a broken item
+Cybercrime,someone hacked my social media
+Cybercrime,lost money in online banking fraud
+Cybercrime,being blackmailed with my photos
+Cybercrime,got a phishing message lost money
+Cybercrime,someone made fake profile of me
+Cybercrime,being cyberstalked online
+Cybercrime,identity used to open fake account
+Cybercrime,getting threatening messages on whatsapp
+Cybercrime,someone threatening to leak my data
+Cybercrime,email hacked and used to scam people
+Cybercrime,lost money to otp fraud call
+Cybercrime,someone spreading lies about me online
+Cybercrime,company data got breached and leaked
+Cybercrime,got scammed buying something online
+Cybercrime,my instagram got hacked
+Cybercrime,someone is blackmailing me online
+Medical negligence,doctor gave me wrong treatment
+Medical negligence,hospital refused emergency treatment
+Medical negligence,complications from a botched surgery
+Medical negligence,clinic overcharged me for tests
+Medical negligence,newborn injured due to hospital negligence
+Medical negligence,pharmacist gave me wrong medicine
+Medical negligence,not informed about risks before procedure
+Medical negligence,hospital withholding my medical records
+Medical negligence,wrong diagnosis led to bad treatment
+Medical negligence,foreign object left in my body after surgery
+Medical negligence,dental procedure damaged my teeth
+Medical negligence,given wrong blood type during transfusion
+Medical negligence,discharged too early and got worse
+Medical negligence,child misdiagnosed by pediatrician
+Medical negligence,doctor operated on wrong body part
+Medical negligence,surgery went wrong and caused harm
+Housing / tenancy,landlord wont return my deposit
+Housing / tenancy,landlord trying to evict me no notice
+Housing / tenancy,landlord wont fix things in my house
+Housing / tenancy,want to break my lease early
+Housing / tenancy,landlord charging more rent than agreed
+Housing / tenancy,landlord entering my house without permission
+Housing / tenancy,asked to vacate immediately
+Housing / tenancy,society not fixing maintenance issues
+Housing / tenancy,landlord raising rent mid lease illegally
+Housing / tenancy,no written agreement what are my rights
+Housing / tenancy,landlord keeping my stuff after i moved out
+Housing / tenancy,landlord wont give me the keys
+Housing / tenancy,roommate not paying their share of rent
+Housing / tenancy,landlord cut my water to force me out
+Housing / tenancy,landlord not returning my security deposit
+Housing / tenancy,being evicted with no proper notice
+Education dispute,college wont give me my certificates
+Education dispute,school wont refund fees after withdrawal
+Education dispute,expelled from college unfairly
+Education dispute,university delaying my degree
+Education dispute,coaching institute wont refund fees
+Education dispute,faced ragging in college
+Education dispute,child denied school admission unfairly
+Education dispute,falsely accused of exam cheating
+Education dispute,scholarship withdrawn with no explanation
+Education dispute,school wont give transfer certificate
+Education dispute,exam results withheld over fee dispute
+Education dispute,teacher discriminating against my child
+Education dispute,university not helping with my disability
+Education dispute,overcharged fees not in the offer letter
+Education dispute,got expelled without a fair hearing
+Education dispute,college withholding my marksheet
+Marriage and family,My spouse abandoned me and the children without any support.
+Marriage and family,I am facing domestic violence and want a protection order.
+Marriage and family,My marriage was never registered. Is it still legally valid?
+Marriage and family,My ex-spouse is not letting me see our children.
+Marriage and family,I want to adopt a child. What is the legal process?
+Marriage and family,My in-laws are pressuring me to leave the shared household.
+Labour dispute,I was asked to work without a written employment contract.
+Labour dispute,My employer is not paying minimum wage.
+Labour dispute,I was demoted without any explanation.
+Labour dispute,My contract was terminated during my probation period unfairly.
+Labour dispute,I was injured at my workplace and my employer refuses to help.
+Labour dispute,My employer is not issuing my relieving letter or experience certificate.
+Traffic accident,I hit a pedestrian while driving and they were injured.
+Traffic accident,My driving license was suspended after an accident.
+Traffic accident,I was in an accident and the other party is refusing to file a police report.
+Traffic accident,My vehicle was towed and impounded after an accident.
+Traffic accident,I was a passenger and got injured in a road accident.
+Traffic accident,The traffic police issued me a challan for something I didn't do.
+Debt dispute,I co-signed a loan for someone and now they've stopped paying.
+Debt dispute,A company is refusing to return my security deposit for a service.
+Debt dispute,I am being sued for a debt I already paid off.
+Debt dispute,My credit card company is charging me for transactions I didn't make.
+Debt dispute,I want to recover money from someone who moved abroad.
+Debt dispute,A moneylender is charging me an illegally high interest rate.
+Criminal defence,I am being investigated for a crime I did not commit.
+Criminal defence,My phone was seized by the police without a warrant.
+Criminal defence,I witnessed a crime and am being asked to testify. What are my rights?
+Criminal defence,My case was dismissed but it's still showing on my record.
+Criminal defence,I received a notice to appear in court but I'm out of town.
+Criminal defence,The police are pressuring me to confess to something I didn't do.
+Property dispute,My co-owner wants to sell the property but I don't agree.
+Property dispute,I want to know if I can legally partition ancestral property.
+Property dispute,My property tax records show the wrong owner name.
+Property dispute,A contractor did substandard construction work on my property.
+Property dispute,I want to know my rights if my rented property is being sold.
+Property dispute,Someone is claiming ownership of my property using a fake will.
+Consumer complaint,An e-commerce site sent me the wrong product and won't exchange it.
+Consumer complaint,A warranty claim for my appliance was rejected without valid reason.
+Consumer complaint,I was charged hidden fees that weren't disclosed at purchase.
+Consumer complaint,A real estate agent misrepresented facts about a property I bought.
+Consumer complaint,My insurance claim was rejected citing a technicality.
+Consumer complaint,A subscription service is charging me after I cancelled.
+Cybercrime,Someone is threatening to leak my personal data unless I pay them.
+Cybercrime,My email account was hacked and used to scam my contacts.
+Cybercrime,I received an OTP fraud call and lost money from my account.
+Cybercrime,Someone is spreading false information about me online.
+Cybercrime,My company's data was breached and customer information was leaked.
+Cybercrime,I was scammed while trying to buy something on a classifieds website.
+Medical negligence,A wrong diagnosis led to unnecessary treatment for me.
+Medical negligence,My surgery left a foreign object inside my body.
+Medical negligence,A dental procedure caused permanent damage to my teeth or gums.
+Medical negligence,I was given the wrong blood type during a transfusion.
+Medical negligence,A hospital discharged me too early and my condition worsened.
+Medical negligence,"My child was misdiagnosed by a pediatrician, delaying proper treatment."
+Housing / tenancy,"My landlord wants to increase rent mid-lease, which isn't allowed by the agreement."
+Housing / tenancy,I want to know my rights as a tenant if there's no written agreement.
+Housing / tenancy,My landlord is withholding my belongings after I moved out.
+Housing / tenancy,I signed a lease but the landlord is now refusing to hand over the keys.
+Housing / tenancy,My roommate/co-tenant is not paying their share of the rent.
+Housing / tenancy,My landlord shut off water or electricity to force me out.
+Education dispute,My scholarship was withdrawn without proper explanation.
+Education dispute,I was denied a transfer certificate by my previous school.
+Education dispute,My exam results were withheld over a fee dispute.
+Education dispute,A teacher is discriminating against my child at school.
+Education dispute,My university is not accommodating my documented disability.
+Education dispute,I was overcharged fees not mentioned in the original admission offer.
+Marriage and family,"hubby hits me evrytime he drinks, wat legal options do i have"
+Marriage and family,quick divorce process india pls help
+Marriage and family,"in laws kicked me out of the house, is that legal?"
+Marriage and family,"want an annulment not divorce, whats the diff"
+Marriage and family,"My fiance backed out after the engagement, can I claim damages?"
+Marriage and family,"step kids wont accept me, any legal issues for the marriage?"
+Marriage and family,wife left with kid and wont tell me where they are
+Marriage and family,Is a marriage solemnised only through religious rites legally recognised?
+Labour dispute,boss ghosted me after i asked for my salary
+Labour dispute,got laid off with zero severance is that even legal
+Labour dispute,company making me sign an NDA that sounds super one sided
+Labour dispute,can my employer make me do unpaid training
+Labour dispute,I was passed over for promotion due to my pregnancy.
+Labour dispute,manager keeps yelling n humiliating me infront of everyone
+Labour dispute,"asked to relocate to another city with 2 days notice, is that ok"
+Labour dispute,Is it legal for my employer to withhold my degree certificates until I complete the notice period?
+Traffic accident,car hit me frm behind at a signal wats my move
+Traffic accident,cop wants a bribe after a minor accident wat do i do
+Traffic accident,"totalled my bike, other guy has no insurance now what"
+Traffic accident,"hit and run no cctv nearby, any hope of compensation"
+Traffic accident,"My learner's license was invalid at the time of the accident, am I liable?"
+Traffic accident,"someone's dog ran into my car, who's at fault legally"
+Traffic accident,Is the vehicle owner or driver liable if the driver was not authorised to use the vehicle?
+Traffic accident,insurance guy lowballing my claim big time
+Debt dispute,"frnd borrowed money on whatsapp promise, no paper proof, can i still sue"
+Debt dispute,"collection agency calling my relatives about my loan, is that legal"
+Debt dispute,gave a personal loan to a coworker who ghosted me
+Debt dispute,my chit fund organizer ran off with everyone's money
+Debt dispute,Can a creditor legally seize my salary account without a court order?
+Debt dispute,landlord kept my deposit saying I owe damages i never caused
+Debt dispute,Is a verbal loan agreement enforceable in an Indian court?
+Debt dispute,emi auto debit failed n now theyre charging crazy penalty
+Criminal defence,"cops came to my house asking questions, do i have to answer"
+Criminal defence,"someone trying to frame me for a crime i didnt do, help"
+Criminal defence,got a notice under section 41A wat does that even mean
+Criminal defence,"my friend got arrested, can i bail him out right away"
+Criminal defence,Is narco-analysis or polygraph testing legally mandatory if police request it?
+Criminal defence,"roommate stole my stuff, can i file a case even without proof"
+Criminal defence,Does a compromise with the complainant automatically close a criminal case?
+Criminal defence,"police confiscated my passport during an investigation, can they do that"
+Property dispute,builder handed over flat thats smaller than wat was promised
+Property dispute,cousin trying to sell ancestral land without asking any of us
+Property dispute,neighbour's construction is literally leaning into my plot
+Property dispute,"bought land turns out its under litigation, am i screwed"
+Property dispute,Can a power of attorney be used to sell property without the owner's direct consent?
+Property dispute,society refusing to transfer flat to my name after purchase
+Property dispute,Is oral partition of ancestral property legally valid without a registered deed?
+Property dispute,"landlord trying to sell the house i live in, do i have any say"
+Consumer complaint,food delivery app sent expired stuff n wont refund
+Consumer complaint,phone company charging random fees i never signed up for
+Consumer complaint,bought sneakers online turned out fake af
+Consumer complaint,gym wont let me cancel membership even tho contract says i can
+Consumer complaint,Can I demand a replacement instead of a refund under the Consumer Protection Act?
+Consumer complaint,cab driver took a super long route and overcharged me
+Consumer complaint,Is a 'no refund' clause on a receipt legally enforceable in India?
+Consumer complaint,"warranty claim denied cuz i lost the receipt, any other proof works?"
+Cybercrime,"got a call saying my acc is blocked, gave otp n now moneys gone"
+Cybercrime,"ex posting my private pics online, wat can i do rn"
+Cybercrime,someone cloned my whatsapp n is scamming my contacts
+Cybercrime,random site is selling my personal data online
+Cybercrime,Is screenshotting and reporting a scammer's UPI ID enough for police to act?
+Cybercrime,"kid got groomed by a stranger online, need help asap"
+Cybercrime,Can I get compensation if my company's data breach exposed my personal info?
+Cybercrime,fake insta acc using my name n photos to scam ppl
+Medical negligence,"doc operated on the wrong knee, im not even joking"
+Medical negligence,hospital billed me for tests that never even happened
+Medical negligence,nurse gave my baby the wrong vaccine dose
+Medical negligence,"anesthesia went wrong during a routine procedure, now im in worse shape"
+Medical negligence,Can I sue a hospital for negligence even if I signed a consent form?
+Medical negligence,clinic refused to give me my reports until i pay extra fees
+Medical negligence,Is there a time limit for filing a medical negligence claim in India?
+Medical negligence,"dentist pulled the wrong tooth, seriously"
+Housing / tenancy,landlord randomly showed up n let himself in while i was out
+Housing / tenancy,roomie moved out n stuck me with the whole rent
+Housing / tenancy,"owner wants 11 month lease but verbally promised 2 yrs, now backing out"
+Housing / tenancy,society charging me a random welcome fee as a new tenant
+Housing / tenancy,Can a landlord legally lock out a tenant for non-payment without a court order?
+Housing / tenancy,pg owner keeping my id proof hostage until i pay extra
+Housing / tenancy,Is a tenant entitled to a rent receipt even for cash payments?
+Housing / tenancy,landlord wants me out in 2 days coz he's selling the flat
+Education dispute,uni lost my original certificates n wont take responsibility
+Education dispute,school suspended my kid without even telling us why
+Education dispute,coaching center ghosted after taking the full fee upfront
+Education dispute,"prof failed me out of spite, i genuinely think"
+Education dispute,Can a university withhold my transcripts over an unrelated library fine?
+Education dispute,hostel kicked me out mid semester over a rule i didnt even know about
+Education dispute,Is it legal for a school to deny admission based on my child's religion?
+Education dispute,got accused of cheating on a test i didnt even take
+Inheritance & succession,"dad died without a will, how do we split the property"
+Inheritance & succession,how to get legal heir certificate in india
+Inheritance & succession,bro hiding dads bank details from the rest of us
+Inheritance & succession,whats the diff between a will n a succession certificate
+Inheritance & succession,Can a daughter legally claim an equal share in ancestral Hindu property?
+Inheritance & succession,"mom wants to cut me out of the will, can she actually do that"
+Inheritance & succession,How do I contest a will I believe was forged?
+Inheritance & succession,"step mom claiming rights over dad's property, is that even valid"
+Inheritance & succession,Is a handwritten will without witnesses considered valid?
+Inheritance & succession,nominee on the LIC policy isnt sharing money with the family
+Inheritance & succession,whats probate n do i actually need it
+Inheritance & succession,"grandpa's property never got divided after he passed, whats the process now"
+Inheritance & succession,Can a Muslim will (wasiyat) exceed one-third of the estate?
+Inheritance & succession,"adopted kid asking about inheritance rights, are they same as biological"
+Inheritance & succession,"brother forged dad's signature on a property transfer, wat can we do"
+Insurance claims,"health insurance denied my claim saying pre existing condition, is that fair"
+Insurance claims,life insurance company denying claim saying dad didnt disclose diabetes
+Insurance claims,insurance guy lowballing my house fire claim big time
+Insurance claims,"cashless claim got rejected right before discharge, now what"
+Insurance claims,Can an insurer reject a claim for a condition unrelated to the non-disclosure?
+Insurance claims,"missed my claim intimation deadline by literally one day, they rejected everything"
+Insurance claims,insurance agent sold me a plan that isnt wat i actually needed
+Insurance claims,"travel insurance wont cover my cancelled trip, saying its not covered"
+Insurance claims,What is the process to escalate an insurance complaint to the Insurance Ombudsman?
+Insurance claims,insurer stalling my claim for months with no real reason
+Insurance claims,"premium got hiked out of nowhere, is that even allowed"
+Insurance claims,Is an insurer required to settle a claim within a specific timeframe under IRDAI rules?
+Insurance claims,"policy lapsed coz i missed one payment, can i still claim"
+Insurance claims,car insurance claim denied saying i wasnt the one driving
+Insurance claims,How do I check if my insurance agent mis-sold me a policy?
+Marriage and family,My husband took our children abroad without my consent.
+Marriage and family,I want to know how alimony or maintenance amount is decided.
+Marriage and family,My live-in partner left me. Do I have any legal rights?
+Marriage and family,I want to file for judicial separation instead of divorce.
+Labour dispute,I was asked to sign a resignation letter under pressure.
+Labour dispute,My employer is not providing ESI (Employee State Insurance) benefits.
+Labour dispute,"I was discriminated against at work due to my caste, religion, or gender."
+Labour dispute,My employer is not giving me paid leave I am entitled to.
+Traffic accident,My vehicle insurance premium was hiked after a no-fault accident.
+Traffic accident,I was involved in a multi-vehicle pile-up and don't know who's liable.
+Traffic accident,The other driver was drunk and caused the accident.
+Traffic accident,I want to claim compensation under the Motor Vehicles Act for a hit-and-run where the driver was never traced.
+Debt dispute,I gave someone a personal guarantee for their loan and now the bank wants me to pay.
+Debt dispute,A recovery agent visited my home and behaved abusively.
+Debt dispute,I want to know the legal interest rate limit on a personal loan.
+Debt dispute,My cheque bounced by mistake and now I'm facing a criminal notice.
+Criminal defence,I want to know the difference between bailable and non-bailable offences.
+Criminal defence,I was named in an FIR but not actually arrested. What should I do?
+Criminal defence,Got a notice under section 41A. What does that even mean?
+Criminal defence,My anticipatory bail application was rejected. What are my options?
+Criminal defence,I was detained by police for questioning without being told why.
+Property dispute,My property has ongoing litigation and I want to check its legal status before buying.
+Property dispute,A developer sold my flat's parking space to someone else.
+Property dispute,My neighbour built a wall encroaching on my land.
+Property dispute,I want to know if adverse possession claims are valid against my property.
+Consumer complaint,A ride-hailing app driver overcharged me and the company won't respond.
+Consumer complaint,I received expired food or medicine from a delivery app.
+Consumer complaint,A bank charged me hidden fees I never agreed to.
+Cybercrime,I clicked a fraudulent link and my bank account was emptied.
+Cybercrime,Someone is running a fake job offer scam using my company's name.
+Cybercrime,My child is being cyberbullied online.
+Cybercrime,A random site is selling my personal data online.
+Medical negligence,I was given someone else's medical reports leading to wrong treatment.
+Medical negligence,A hospital refused to hand over my discharge summary.
+Medical negligence,I want to know how to file a medical negligence case against a doctor.
+Medical negligence,My insurance claim for a hospital bill was denied due to a coding error by the hospital.
+Housing / tenancy,My landlord wants to charge an unreasonably high amount as brokerage.
+Housing / tenancy,I want to know the legal notice period required before eviction.
+Housing / tenancy,My PG or hostel owner is not returning my deposit.
+Housing / tenancy,My landlord is refusing to give a rent receipt.
+Education dispute,I want to know my rights if my college changes the syllabus after admission.
+Education dispute,My hostel warden imposed unfair fines on me.
+Education dispute,I was denied a re-evaluation of my exam paper despite a valid request.
+Education dispute,My child's school is charging fees not approved by the education board.
+Inheritance & succession,My father died without a will. How is the property divided?
+Inheritance & succession,I want to know how to get a legal heir certificate.
+Inheritance & succession,My brother is hiding my late father's assets from me.
+Inheritance & succession,I want to challenge a will that seems forged.
+Inheritance & succession,How do I get a succession certificate for my deceased spouse's bank accounts?
+Inheritance & succession,My mother wants to disinherit me. Can she do that?
+Inheritance & succession,I want to know my inheritance rights as a daughter under Hindu law.
+Inheritance & succession,My father made a will favoring one child. Can I contest it?
+Inheritance & succession,I want to know how joint family property is divided after a death.
+Inheritance & succession,My deceased brother's nominee is refusing to share the insurance payout with the family.
+Inheritance & succession,I want to know the process for probate of a will.
+Inheritance & succession,My stepmother is claiming rights over my late father's property.
+Insurance claims,My health insurance claim was rejected for a pre-existing condition.
+Insurance claims,My life insurance claim was denied citing non-disclosure by the deceased.
+Insurance claims,My home insurance claim after a fire was delayed for months.
+Insurance claims,The insurance company is offering a much lower settlement than my policy covers.
+Insurance claims,I want to know how to file a complaint against an insurance company.
+Insurance claims,My cashless hospital claim was denied at the last minute.
+Insurance claims,My travel insurance claim for a cancelled trip was rejected.
+Insurance claims,I was mis-sold an insurance policy by an agent.
+Insurance claims,My insurer is delaying my claim without giving a valid reason.
+Insurance claims,I want to know the ombudsman process for insurance disputes.
+Insurance claims,My claim was rejected because I missed the intimation deadline by a day.
+Insurance claims,My insurance premium was increased without proper notice.
+Inheritance & succession,"my father died without a will. how is the property divided, pls advise"
+Inheritance & succession,just wanna know how to get a legal heir certificate
+Inheritance & succession,"my brother is hiding my late fathers assets from me, need this urgently"
+Inheritance & succession,wanna challenge a will that seems forged
+Inheritance & succession,"how do i get a succession certificate for my deceased spouses bank accounts, wat r my options"
+Inheritance & succession,my mother wants to disinherit me. can she do that
+Inheritance & succession,"just wanna know my inheritance rights as a daughter under hindu law, any help appreciated"
+Inheritance & succession,my father made a will favoring one child. can i contest it
+Inheritance & succession,"just wanna know how joint family property is divided after a death, asap pls"
+Inheritance & succession,my deceased brothers nominee is refusing to share the insurance payout with the family
+Inheritance & succession,"just wanna know the process for probate of a will, pls advise"
+Inheritance & succession,my stepmother is claiming rights over my late fathers property
+Inheritance & succession,"my father died without a will. how is the property divided, need this urgently"
+Inheritance & succession,"my brother is hiding my late fathers assets from me, wat r my options"
+Inheritance & succession,"how do i get a succession certificate for my deceased spouses bank accounts, any help appreciated"
+Inheritance & succession,"just wanna know my inheritance rights as a daughter under hindu law, asap pls"
+Inheritance & succession,"just wanna know how joint family property is divided after a death, pls advise"
+Inheritance & succession,"just wanna know the process for probate of a will, need this urgently"
+Inheritance & succession,"my father died without a will. how is the property divided, wat r my options"
+Insurance claims,"my health insurance claim was rejected for a pre-existing condition, pls advise"
+Insurance claims,my life insurance claim was denied citing non-disclosure by the deceased
+Insurance claims,"my home insurance claim after a fire was delayed for months, need this urgently"
+Insurance claims,the insurance company is offering a much lower settlement than my policy covers
+Insurance claims,"just wanna know how to file a complaint against an insurance company, wat r my options"
+Insurance claims,my cashless hospital claim was denied at the last minute
+Insurance claims,"my travel insurance claim for a cancelled trip was rejected, any help appreciated"
+Insurance claims,i was mis-sold an insurance policy by an agent
+Insurance claims,"my insurer is delaying my claim without giving a valid reason, asap pls"
+Insurance claims,just wanna know the ombudsman process for insurance disputes
+Insurance claims,"my claim was rejected because i missed the intimation deadline by a day, pls advise"
+Insurance claims,my insurance premium was increased without proper notice
+Insurance claims,"my health insurance claim was rejected for a pre-existing condition, need this urgently"
+Insurance claims,"my home insurance claim after a fire was delayed for months, wat r my options"
+Insurance claims,"just wanna know how to file a complaint against an insurance company, any help appreciated"
+Insurance claims,"my travel insurance claim for a cancelled trip was rejected, asap pls"
+Insurance claims,"my insurer is delaying my claim without giving a valid reason, pls advise"
+Insurance claims,"my claim was rejected because i missed the intimation deadline by a day, need this urgently"
+Insurance claims,"my health insurance claim was rejected for a pre-existing condition, wat r my options"
