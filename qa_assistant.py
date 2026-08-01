@@ -23,7 +23,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk.stem import PorterStemmer
-from sentence_transformers import SentenceTransformer, util
+from fastembed import TextEmbedding
 
 
 from question_classify import QuestionClassify
@@ -204,7 +204,9 @@ class QAAssistant:
 
         if self.embedding_model is None:
           print("Loading model...")
-          self.embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+          self.embedding_model = TextEmbedding(
+            model_name="sentence-transformers/all-MiniLM-L6-v2"
+        )
           print("Model created:", self.embedding_model)
 
     # -- internal helpers -------------------------------------------------
@@ -231,13 +233,10 @@ class QAAssistant:
         tfidf_scores = cosine_similarity(user_vec, sub_matrix)[0]
 
         # Sentence Transformer similarity
-        query_embedding = self.embedding_model.encode(
-            user_question,
-            convert_to_numpy=True,
-            normalize_embeddings=True
-        )
+        query_embedding = next(self.embedding_model.embed([user_question]))
 
         sub_embeddings = self.question_embeddings[indices]
+        query_embedding = query_embedding / (np.linalg.norm(query_embedding) + 1e-8)
 
         semantic_scores = np.dot(sub_embeddings,query_embedding)
         
