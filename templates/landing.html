@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LegalLens · Citizen Legal Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/landing.css') }}"
+    />
+  </head>
+  <body>
+    <div class="ledger-bg"></div>
+
+    <header class="masthead">
+      <div class="masthead-inner">
+        <div class="brand-group">
+          <div class="seal">⚖</div>
+          <div class="brand-text">
+            <h1>LegalLens <span>Legal Assistant</span></h1>
+            <p class="tagline-top">
+              Instant, reliable clarity for everyday legal situations.
+            </p>
+          </div>
+        </div>
+        <a class="nav-cta" href="{{ url_for('assistant_page') }}">Open Assistant →</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge-live">
+          HYBRID SEARCH &bull; TF-IDF + SENTENCE TRANSFORMERS
+        </div>
+        <h2>
+          Describe your legal issue.<br />Get the
+          <em>most relevant legal guidance.</em>
+        </h2>
+        <p class="lede">
+          LegalLens classifies your legal question, retrieves the most relevant
+          guidance using hybrid search (TF-IDF + Sentence Transformers),
+          normalizes similarity scores, and ranks results to provide accurate
+          legal assistance.
+        </p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="{{ url_for('assistant_page') }}">
+            Ask a question
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+            >
+              <path d="M4 12h16M14 6l6 6-6 6" />
+            </svg>
+          </a>
+          <a class="btn-ghost" href="#focus-areas">See what it covers</a>
+        </div>
+
+        <div class="trust-row">
+          <div><span>&#10003;</span>223 curated Q&amp;A entries</div>
+          <div><span>&#10003;</span>13 legal categories</div>
+          <div><span>&#10003;</span>Hybrid Retrieval</div>
+          <div><span>&#10003;</span>No account needed</div>
+        </div>
+      </div>
+
+      <div class="hero-preview">
+        <div class="preview-header">
+          <span class="preview-title">Live preview</span>
+          <span class="live-dot">/api/ask</span>
+        </div>
+
+        <div class="p-entry">
+          <div class="p-head">
+            <span>SYSTEM 000</span><span class="p-tag">Welcome</span>
+          </div>
+          <p>
+            Type your question in plain English — for example,
+            <em>"My landlord won't return my security deposit."</em>
+          </p>
+        </div>
+
+        <div class="p-entry user">
+          <div class="p-head">
+            <span>DOCKET 001</span><span class="p-tag">You</span>
+          </div>
+          <p>My tenant has stopped paying rent.</p>
+        </div>
+
+        <div class="p-entry">
+          <div class="p-head">
+            <span>DOCKET 002</span
+            ><span class="p-tag stamp">Housing / tenancy</span>
+          </div>
+          <p class="matched-q">
+            Most similar question: "My roommate/co-tenant is not paying their
+            share of the rent."<span class="score-bar"
+              >Similarity Score: 0.89</span
+            >
+          </p>
+          <ul>
+            <li>
+              Review your rental agreement to see who is legally liable for the
+              full rent.
+            </li>
+            <li>Send a written notice before pursuing formal proceedings.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="focus-areas">
+      <div class="categories-box">
+        <div class="categories-head">
+          <span class="label">Focus areas</span>
+          <span class="sub"
+            >Search starts within the predicted legal category. If no strong
+            match is found, LegalLens expands the search across all legal
+            categories.</span
+          >
+        </div>
+        <div class="chip-row">
+          <span class="chip">Marriage and family</span>
+          <span class="chip">Labour dispute</span>
+          <span class="chip">Traffic accident</span>
+          <span class="chip">Debt dispute</span>
+          <span class="chip">Criminal defence</span>
+          <span class="chip">Property dispute</span>
+          <span class="chip">Consumer complaint</span>
+          <span class="chip">Cybercrime</span>
+          <span class="chip">Medical negligence</span>
+          <span class="chip">Housing / tenancy</span>
+          <span class="chip">Education dispute</span>
+          <span class="chip">Insurance claims</span>
+          <span class="chip">Inheritance &amp; succession</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="steps">
+        <div class="step">
+          <div class="num">01 — CLASSIFY</div>
+          <h3>Understand the Query</h3>
+          <p>
+            Describe your legal issue in Simple English. A trained classifier
+            predicts the most relevant legal category before retrieval begins.
+          </p>
+        </div>
+        <div class="step">
+          <div class="num">02 — HYBRID RETRIEVAL</div>
+          <h3>Hybrid Retrieval</h3>
+          <p>
+            TF-IDF retrieves keyword matches while Sentence Transformers capture
+            semantic meaning. Both similarity scores are normalized and combined
+            using weighted scoring to rank the most relevant legal guidance..
+          </p>
+        </div>
+        <div class="step">
+          <div class="num">03 — RESPOND</div>
+          <h3>Retrieve Relevant Guidance</h3>
+          <p>
+            LegalLens returns the highest-ranked legal guidance together with
+            its category,similarity score, and additional relevant results when
+            available.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <p class="disclaimer">
+      <strong>Disclaimer:</strong> LegalLens gives general information, not
+      formal legal advice. Always consult a qualified lawyer for serious
+      matters.
+    </p>
+  </body>
+</html>

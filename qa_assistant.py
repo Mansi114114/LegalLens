@@ -17,10 +17,13 @@ Pipeline:
 import os
 import re
 import json
+import numpy as np
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from nltk.stem import PorterStemmer
+from sentence_transformers import SentenceTransformer, util
+
 
 from question_classify import QuestionClassify
 
@@ -189,6 +192,9 @@ class QAAssistant:
             sublinear_tf=True,
         )
         self.question_matrix = self.vectorizer.fit_transform(self._retrieval_texts)
+        self.embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+
+        self.question_embeddings = self.embedding_model.encode(self._retrieval_texts, convert_to_tensor=True)
 
         self.type_classifier = QuestionClassify()
         self.known_types = sorted(set(self.types))
@@ -207,13 +213,44 @@ class QAAssistant:
             # Classifier has no predict_proba; fall back to a plain predict.
             return model.predict([user_question])[0], 1.0
 
-    def _rank(self, user_vec, indices, top_k):
+    def _rank(self, user_question, user_vec, indices, top_k):
         if not indices:
             return []
+
+        # TF-IDF similarity
         sub_matrix = self.question_matrix[indices]
-        sims = cosine_similarity(user_vec, sub_matrix)[0]
-        order = sims.argsort()[::-1][:top_k]
-        return [(indices[i], float(sims[i])) for i in order]
+        tfidf_scores = cosine_similarity(user_vec, sub_matrix)[0]
+
+        # Sentence Transformer similarity
+        query_embedding = self.embedding_model.encode(
+            user_question,
+            convert_to_tensor=True
+        )
+
+        sub_embeddings = self.question_embeddings[indices]
+
+        semantic_scores = util.cos_sim(
+            query_embedding,
+            sub_embeddings
+        )[0].cpu().numpy()
+        
+        tfidf_scores = (tfidf_scores - tfidf_scores.min()) / ( tfidf_scores.max() - tfidf_scores.min() + 1e-8)
+        semantic_scores = (semantic_scores - semantic_scores.min()) / (semantic_scores.max() - semantic_scores.min() + 1e-8)
+        # Weighted score
+        final_scores = (
+            0.4 * tfidf_scores +
+            0.6 * semantic_scores
+        )
+        print("TF-IDF:", tfidf_scores[:5])
+        print("Semantic:", semantic_scores[:5])
+        # print("Final:", final_scores[:5])  
+
+        order = np.argsort(final_scores)[::-1][:top_k]
+
+        return [
+            (indices[i], float(final_scores[i]))
+            for i in order
+        ]
 
     def _dedupe(self, ranked):
         """Collapse results that share the same answer text (scenario variants)."""
@@ -248,13 +285,22 @@ class QAAssistant:
         ranked = []
         if confidence >= MIN_TYPE_CONFIDENCE:
             type_indices = [i for i, t in enumerate(self.types) if t == predicted_type]
-            ranked = [(i, s) for i, s in self._rank(user_vec, type_indices, top_k * 2) if s >= MIN_SCORE]
+            ranked = [
+                (i, s)
+                for i, s in self._rank(
+                    user_question,
+                    user_vec,
+                    type_indices,
+                    top_k * 2
+                )
+                if s >= MIN_SCORE
+            ]
 
         # 2) If that found nothing, widen the search to the whole knowledge base.
         used_fallback = False
         if not ranked:
             all_indices = list(range(len(self.questions)))
-            ranked = [(i, s) for i, s in self._rank(user_vec, all_indices, top_k * 2) if s >= MIN_SCORE]
+            ranked = [(i, s) for i, s in self._rank(user_question, user_vec, all_indices, top_k * 2) if s >= MIN_SCORE]
             used_fallback = True
 
             if ranked:

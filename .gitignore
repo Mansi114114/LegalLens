@@ -1,5 +1,23 @@
-embedding/*.bin
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
 venv/
 .venv/
-__pycache__/
-*.pyc
+
+# Environment variables
+.env
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Embedding model (if downloaded locally)
+embedding/
+embedding/*.bin
+
+# Logs
+*.log

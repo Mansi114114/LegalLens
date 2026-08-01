@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="16" fill="url(#blueGrad)" />
+  
+  <defs>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#000000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Safeguarding Shield + Magnifying Glass (Legal Protection / Search Theme) -->
+  <g filter="url(#shadow)">
+    <!-- Outer White Shield -->
+    <path d="M32 10 L50 16 V30 C50 42 38 50 32 54 C26 50 14 42 14 30 V16 Z" fill="#FFFFFF" />
+    
+    <!-- Inner Blue Shield Outline / Cutout -->
+    <path d="M32 15 L45 19.5 V30 C45 39.5 35.5 46 32 48.5 C28.5 46 19 39.5 19 30 V19.5 Z" fill="#2563EB" />
+
+    <!-- Magnifying Glass inside Shield -->
+    <g transform="translate(3, 2)">
+      <!-- Glass Rim -->
+      <circle cx="29" cy="27" r="8" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+      <!-- Glass Highlight -->
+      <path d="M24 23 C25 21.5 27 21 28 21" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+      <!-- Handle -->
+      <path d="M35 33 L42 40" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" />
+    </g>
+  </g>
+</svg>

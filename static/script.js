@@ -1,7 +1,7 @@
 const CATEGORIES = [
   "Marriage & family", "Labour dispute", "Traffic accident", "Debt dispute",
   "Criminal defence", "Property dispute", "Consumer complaint", "Cybercrime",
-  "Medical negligence", "Housing / tenancy", "Education dispute"
+  "Medical negligence", "Housing / tenancy", "Education dispute", "Insurance claims"
 ];
 
 const categoryList = document.getElementById("category-list");
@@ -75,16 +75,52 @@ function renderAnswerEntry(entry, payload) {
   let body = "";
 
   if (payload.results && payload.results.length) {
-    payload.results.forEach((item, i) => {
+    const topResult = payload.results[0];
+    const topScore = Math.min(topResult.score, 0.99).toFixed(2);
+
+    // Render only the top primary match initially
+    body += `
+      <div class="candidate primary-candidate">
+        <p class="matched-q">Most similar question: “${escapeHtml(topResult.question)}” <span class="score-bar">Similarity Score: ${topScore}</span></p>
+        <ul class="answers">
+          ${topResult.answers.map(a => `<li>${escapeHtml(a)}</li>`).join("")}
+        </ul>
+      </div>
+    `;
+
+    // If there are other results, put them in a collapsible dropdown menu below
+    if (payload.results.length > 1) {
       body += `
-        <div class="candidate">
-          <p class="matched-q">Closest on file: “${escapeHtml(item.question)}” <span class="score-bar">match ${(item.score * 100).toFixed(0)}%</span></p>
-          <ul class="answers">
-            ${item.answers.map(a => `<li>${escapeHtml(a)}</li>`).join("")}
-          </ul>
+        <div class="alternatives-container">
+          <button type="button" class="alternatives-toggle" onclick="
+            const list = this.nextElementSibling;
+            list.classList.toggle('open');
+            const isOpen = list.classList.contains('open');
+            this.textContent = isOpen ? '▲ Hide other relevant results' : '▼ View other relevant results (${payload.results.length - 1})';
+          ">
+            ▼ View other relevant results (${payload.results.length - 1})
+          </button>
+          <div class="alternatives-list">
+      `;
+
+      payload.results.slice(1).forEach((item) => {
+        const altScore = Math.min(item.score, 0.99).toFixed(2);
+        body += `
+          <div class="candidate alt-candidate">
+            <p class="matched-q">Most similar question: “${escapeHtml(item.question)}” <span class="score-bar">Similarity Score: ${altScore}</span></p>
+            <ul class="answers">
+              ${item.answers.map(a => `<li>${escapeHtml(a)}</li>`).join("")}
+            </ul>
+          </div>
+        `;
+      });
+
+      body += `
+          </div>
         </div>
       `;
-    });
+    }
+
   } else {
     body += `<p>${escapeHtml(payload.note || "No matching entry found.")}</p>`;
     if (payload.generic_advice && payload.generic_advice.length) {

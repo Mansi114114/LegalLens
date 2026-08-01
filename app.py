@@ -21,7 +21,11 @@ assistant = QAAssistant()
 
 
 @app.route("/")
-def index():
+def landing():
+    return render_template("landing.html")
+
+@app.route("/assistant")
+def assistant_page():
     return render_template("index.html")
 
 
