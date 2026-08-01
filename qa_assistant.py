@@ -198,12 +198,20 @@ class QAAssistant:
         self.known_types = sorted(set(self.types))
     
     def load_embeddings(self):
+        print("load_embeddings called")
+        print("Before:", self.embedding_model)
+
         if self.embedding_model is None:
-            self.embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
-            self.question_embeddings = self.embedding_model.encode(
-                self._retrieval_texts,
-                convert_to_tensor=True
-            )
+          print("Loading model...")
+          self.embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+          print("Model created:", self.embedding_model)
+
+          self.question_embeddings = self.embedding_model.encode(
+            self._retrieval_texts,
+            convert_to_tensor=True
+        )
+
+        print("After:", self.embedding_model)
     # -- internal helpers -------------------------------------------------
 
     def _predict_type(self, user_question: str):
@@ -219,6 +227,7 @@ class QAAssistant:
             return model.predict([user_question])[0], 1.0
 
     def _rank(self, user_question, user_vec, indices, top_k):
+        self.load_embeddings()
         if not indices:
             return []
 
