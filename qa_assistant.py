@@ -192,13 +192,18 @@ class QAAssistant:
             sublinear_tf=True,
         )
         self.question_matrix = self.vectorizer.fit_transform(self._retrieval_texts)
-        self.embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
-
-        self.question_embeddings = self.embedding_model.encode(self._retrieval_texts, convert_to_tensor=True)
-
+        self.embedding_model = None
+        self.question_embeddings = None
         self.type_classifier = QuestionClassify()
         self.known_types = sorted(set(self.types))
-
+    
+    def load_embeddings(self):
+        if self.embedding_model is None:
+            self.embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+            self.question_embeddings = self.embedding_model.encode(
+                self._retrieval_texts,
+                convert_to_tensor=True
+            )
     # -- internal helpers -------------------------------------------------
 
     def _predict_type(self, user_question: str):
