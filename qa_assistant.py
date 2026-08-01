@@ -18,6 +18,7 @@ import os
 import re
 import json
 import numpy as np
+import psutil
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -193,7 +194,7 @@ class QAAssistant:
         )
         self.question_matrix = self.vectorizer.fit_transform(self._retrieval_texts)
         self.embedding_model = None
-        self.question_embeddings = None
+        self.question_embeddings = np.load("data/question_embeddings.npy")
         self.type_classifier = QuestionClassify()
         self.known_types = sorted(set(self.types))
     
@@ -205,13 +206,9 @@ class QAAssistant:
           print("Loading model...")
           self.embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
           print("Model created:", self.embedding_model)
+          process = psutil.Process(os.getpid())
+          print("RAM:", process.memory_info().rss / 1024 / 1024, "MB")
 
-          self.question_embeddings = self.embedding_model.encode(
-            self._retrieval_texts,
-            convert_to_tensor=True
-        )
-
-        print("After:", self.embedding_model)
     # -- internal helpers -------------------------------------------------
 
     def _predict_type(self, user_question: str):
@@ -238,15 +235,13 @@ class QAAssistant:
         # Sentence Transformer similarity
         query_embedding = self.embedding_model.encode(
             user_question,
-            convert_to_tensor=True
+            convert_to_numpy=True,
+            normalize_embeddings=True
         )
 
         sub_embeddings = self.question_embeddings[indices]
 
-        semantic_scores = util.cos_sim(
-            query_embedding,
-            sub_embeddings
-        )[0].cpu().numpy()
+        semantic_scores = np.dot(sub_embeddings,query_embedding)
         
         tfidf_scores = (tfidf_scores - tfidf_scores.min()) / ( tfidf_scores.max() - tfidf_scores.min() + 1e-8)
         semantic_scores = (semantic_scores - semantic_scores.min()) / (semantic_scores.max() - semantic_scores.min() + 1e-8)
