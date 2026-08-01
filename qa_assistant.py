@@ -18,7 +18,7 @@ import os
 import re
 import json
 import numpy as np
-import psutil
+
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -206,8 +206,6 @@ class QAAssistant:
           print("Loading model...")
           self.embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
           print("Model created:", self.embedding_model)
-          process = psutil.Process(os.getpid())
-          print("RAM:", process.memory_info().rss / 1024 / 1024, "MB")
 
     # -- internal helpers -------------------------------------------------
 
