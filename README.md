@@ -1,52 +1,65 @@
-# ⚖️ LegalLens – Intelligent Legal Question Answering using Hybrid Retrieval
+# ⚖️ LegalLens – AI-Powered Legal Question Answering using Hybrid Retrieval
 
-LegalLens is an AI-powered legal guidance assistant that helps users describe legal issues in plain English, automatically identifies the legal category, retrieves the most relevant cases using **Hybrid Retrieval (TF-IDF + Sentence Transformers)**, and provides practical legal guidance through a modern web interface.
+LegalLens is an AI-powered legal guidance assistant that helps users describe legal issues in plain English, automatically predicts the most relevant legal category, retrieves the best matching legal guidance using **Hybrid Retrieval (TF-IDF + FastEmbed)**, and presents practical legal information through a modern, responsive web interface.
 
-> **Disclaimer:** LegalLens provides general legal information only. It is **not legal advice**. Always consult a qualified legal professional for important legal decisions.
+> **Disclaimer:** LegalLens provides general legal information only. It is **not legal advice**. Always consult a qualified legal professional before making legal decisions.
 
 ---
 
-## ✨ Features
+# 🌐 Live Demo
 
-- 🤖 Automatic legal category classification
-- 🔍 Hybrid Retrieval (TF-IDF + Sentence Transformers)
-- 📊 Normalized similarity scores for fair ranking
+🚀 **Try LegalLens here**
+
+**https://legallens-il4m.onrender.com/**
+
+---
+
+# ✨ Features
+
+- 🤖 Automatic legal category prediction
+- 🔍 Hybrid Retrieval (TF-IDF + FastEmbed)
+- 🧠 Semantic search using **all-MiniLM-L6-v2**
+- 📊 Weighted similarity scoring
 - 📚 Curated legal knowledge base
-- 💬 Modern chat-based web interface
 - 🎯 Category-first retrieval with intelligent fallback
-- ⚡ Fast Flask backend with REST API
+- ⚡ Memory-optimized inference using ONNX Runtime
+- 💬 Interactive chatbot interface
 - 📱 Responsive dark-themed UI
+- 🚀 Deployed on Render
 
 ---
 
-## 🛠 Tech Stack
+# 🛠 Tech Stack
 
-### Backend
+## Backend
+
 - Python
 - Flask
 - Scikit-learn
-- Sentence Transformers
+- FastEmbed
 - NumPy
 - Joblib
 
-### Frontend
+## Frontend
+
 - HTML5
 - CSS3
-- Vanilla JavaScript
+- JavaScript
 
-### Machine Learning
+## Machine Learning
+
 - Logistic Regression
 - TF-IDF Vectorizer
-- Sentence Transformers
+- FastEmbed (all-MiniLM-L6-v2)
 - Cosine Similarity
 
 ---
 
-## 🚀 How It Works
+# 🚀 How It Works
 
-### 1. User Question
+## Step 1 – User Question
 
-The user types a legal question in plain English.
+The user enters a legal question in plain English.
 
 Example:
 
@@ -54,94 +67,132 @@ Example:
 
 ---
 
-### 2. Legal Classification
+## Step 2 – Legal Category Prediction
 
-A Logistic Regression classifier predicts the legal category.
+A Logistic Regression classifier predicts the most relevant legal category.
 
-Examples:
+Supported categories include:
 
-- Housing / Tenancy
+- Marriage and Family
+- Labour Dispute
+- Traffic Accident
+- Debt Dispute
+- Criminal Defence
+- Property Dispute
 - Consumer Complaint
 - Cybercrime
 - Medical Negligence
-- Labour Dispute
-- Property Dispute
+- Housing / Tenancy
+- Education Dispute
+- Insurance Claims
+- Inheritance & Succession
 
 ---
 
-### 3. Hybrid Retrieval
+## Step 3 – Hybrid Retrieval
 
-LegalLens performs retrieval using **two different methods**.
+LegalLens retrieves the most relevant legal guidance using **two complementary retrieval methods.**
 
-#### TF-IDF Retrieval
+### 🔹 TF-IDF Retrieval
 
-Finds keyword-based similarity.
+Captures keyword similarity.
 
-#### Semantic Retrieval
+Example
 
-Sentence Transformers understand the meaning of the sentence.
-
-Example:
-
-> "Doctor operated on the wrong body part."
+```
+salary not paid
+```
 
 matches
 
-> "The doctor gave the wrong treatment."
+```
+salary payment delayed
+```
 
-even without identical words.
+because important keywords overlap.
 
 ---
 
-### 4. Score Normalization
+### 🔹 Semantic Retrieval
 
-Since TF-IDF and semantic similarities use different value ranges, both scores are normalized before combining.
+FastEmbed generates semantic embeddings using the **all-MiniLM-L6-v2** embedding model.
+
+Instead of relying on identical words, it understands sentence meaning.
+
+Example
 
 ```
-Final Score =
-0.4 × Normalized TF-IDF
+Doctor operated on the wrong body part.
+```
+
+matches
+
+```
+The doctor gave the wrong treatment.
+```
+
+even though the wording is different.
+
+---
+
+## Step 4 – Score Normalization
+
+TF-IDF and semantic similarities produce scores on different scales.
+
+Both scores are normalized before combining.
+
+```
+Final Score
+
+=
+
+0.4 × TF-IDF Score
+
 +
-0.6 × Normalized Semantic Score
+
+0.6 × Semantic Score
 ```
 
-This prevents one retrieval method from dominating the final ranking.
+This prevents one retrieval method from dominating the ranking.
 
 ---
 
-### 5. Intelligent Ranking
+## Step 5 – Intelligent Ranking
 
-Results are ranked using the combined hybrid similarity score.
+The highest-ranked legal guidance is returned.
 
-If no strong match exists within the predicted legal category, the search automatically expands across all legal categories.
+If there is no strong match inside the predicted category, LegalLens automatically expands the search across every legal category.
 
 ---
 
-### 6. Response Generation
+## Step 6 – Response
 
-LegalLens returns
+The assistant returns
 
 - Predicted legal category
 - Most similar legal question
 - Similarity score
 - Legal guidance
-- Additional relevant matches (optional)
+- Additional relevant results
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
-```
-CrimeAssistant/
+```text
+LegalLens/
 │
-├── app.py                     # Flask application
-├── qa_assistant.py            # Hybrid retrieval engine
-├── question_classify.py       # Category classifier
-├── question_train.py          # Train classifier
-├── check_labels.py            # Dataset validation
+├── app.py
+├── qa_assistant.py
+├── question_classify.py
+├── question_train.py
+├── build_embeddings.py
+├── check_labels.py
 │
 ├── data/
 │   ├── qa_pairs.json
-│   └── question_train.csv
+│   ├── question_train.csv
+│   └── question_embeddings.npy
 │
 ├── model/
 │   └── question_text.model
@@ -164,50 +215,66 @@ CrimeAssistant/
 
 ---
 
-## 📸 Application Flow
+# 📸 Application Flow
 
+```
 Landing Page
 
-↓
+        │
+
+        ▼
 
 User enters legal question
 
-↓
+        │
 
-Legal category prediction
+        ▼
 
-↓
+Legal Category Prediction
+
+        │
+
+        ▼
 
 Hybrid Retrieval
 
-- TF-IDF
-- Sentence Transformers
+   ├── TF-IDF
+   └── FastEmbed
 
-↓
+        │
 
-Similarity score normalization
+        ▼
 
-↓
+Similarity Score Normalization
 
-Ranking
+        │
 
-↓
+        ▼
 
-Most relevant legal guidance returned
+Weighted Ranking
+
+        │
+
+        ▼
+
+Most Relevant Legal Guidance Returned
+```
 
 ---
 
-## 📡 API
+# 📡 REST API
 
-### POST `/api/ask`
+## POST `/api/ask`
 
 ### Request
 
 ```json
 {
-  "question": "My landlord won't return my security deposit."
+    "question": "My landlord won't return my security deposit."
 }
 ```
+
+---
 
 ### Sample Response
 
@@ -231,12 +298,18 @@ Most relevant legal guidance returned
 
 ---
 
-## ⚙️ Installation
+# ⚙️ Installation
 
 Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Mansi114114/CrimeAssistant.git
+```
+
+Move into the project
+
+```bash
+cd CrimeAssistant
 ```
 
 Install dependencies
@@ -245,13 +318,25 @@ Install dependencies
 pip install -r requirements.txt
 ```
 
+Generate semantic embeddings
+
+```bash
+python build_embeddings.py
+```
+
+Train the classifier
+
+```bash
+python question_train.py
+```
+
 Run the application
 
 ```bash
 python app.py
 ```
 
-Open
+Open your browser
 
 ```
 http://127.0.0.1:5000
@@ -259,7 +344,7 @@ http://127.0.0.1:5000
 
 ---
 
-## 📚 Knowledge Base
+# 📚 Knowledge Base
 
 Legal questions and guidance are stored in
 
@@ -267,11 +352,48 @@ Legal questions and guidance are stored in
 data/qa_pairs.json
 ```
 
-New legal entries can be added without retraining the retrieval system.
+Each record contains
+
+- Legal question
+- Legal category
+- Practical legal guidance
+
+New entries can be added easily without changing the application code.
 
 ---
 
-## 🧠 Retraining the Classifier
+# 🧠 Semantic Embeddings
+
+Semantic embeddings are generated using
+
+```
+build_embeddings.py
+```
+
+Run
+
+```bash
+python build_embeddings.py
+```
+
+This creates
+
+```
+data/question_embeddings.npy
+```
+
+The application loads these precomputed embeddings during startup instead of generating them every time.
+
+This provides:
+
+- ⚡ Faster startup
+- 💾 Lower memory usage
+- 🚀 Faster semantic retrieval
+- ☁️ Easier deployment on cloud platforms like Render
+
+---
+
+# 🎯 Retraining the Classifier
 
 If you update
 
@@ -285,7 +407,7 @@ retrain the classifier using
 python question_train.py
 ```
 
-This generates a new trained model in
+This generates
 
 ```
 model/question_text.model
@@ -293,20 +415,28 @@ model/question_text.model
 
 ---
 
-## 🔮 Future Improvements
+# 📈 Future Improvements
 
-- Voice-based legal queries
-- OCR for legal documents
-- LLM-generated legal explanations
-- Multilingual support
-- Case document search
-- User authentication
-- Legal document summarization
+- 🎙 Voice-based legal queries
+- 🌍 Multilingual support
+- 📄 OCR for legal documents
+- 🤖 LLM-generated legal explanations
+- 📑 Legal document summarization
+- 📂 PDF upload support
+- 🔐 User authentication
+- 💬 Conversation history
+- ⚖️ Case law search
 
 ---
 
-## ⚠️ Disclaimer
+# ⚠️ Disclaimer
 
 LegalLens provides general legal information and educational guidance only.
 
-It is **not a substitute for professional legal advice**. Always consult a qualified legal practitioner before making legal decisions.
+The information returned by this application should **not** be considered professional legal advice.
+
+Always consult a qualified legal practitioner before making legal decisions.
+
+---
+
+⭐ If you found this project useful, consider giving it a star on GitHub!
