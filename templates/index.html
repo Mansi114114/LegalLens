@@ -11,50 +11,112 @@
 </head>
 <body>
 
-<div class="ledger-bg"></div>
+<div class="app">
 
-<header class="masthead">
-  <div class="masthead-inner">
-    <div class="masthead-left">
-      <a href="{{ url_for('landing') }}" class="home-nav-btn" aria-label="Back to landing page">← Back</a>
-      <div class="seal">⚖</div>
-      <div class="masthead-text">
-        <h1>LegalLens <span>Legal Assistant</span></h1>
-        <p class="tagline">Get clear, practical guidance for everyday legal topics — from housing and family to consumer rights.</p>
+  <!-- Overlay behind the drawer on narrow screens; inert on desktop. -->
+  <div class="scrim" id="scrim" hidden></div>
+
+  <aside class="sidebar" id="sidebar" aria-label="Conversations">
+    <div class="sidebar-top">
+      <a href="{{ url_for('landing') }}" class="brand" aria-label="LegalLens home">
+        <span class="brand-seal">⚖</span>
+        <span class="brand-name">LegalLens</span>
+      </a>
+      <button type="button" class="icon-btn drawer-close" id="drawer-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="sidebar-actions">
+      <button type="button" class="new-chat-btn" id="new-chat-btn">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        New chat
+      </button>
+
+      <div class="search-field">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>
+        </svg>
+        <input type="search" id="chat-search" placeholder="Search in chats" aria-label="Search in chats" autocomplete="off">
       </div>
     </div>
-  </div>
-</header>
 
-<main class="stage">
+    <nav class="chat-list-wrap">
+      <p class="list-label" id="list-label">Chats</p>
+      <ul class="chat-list" id="chat-list"></ul>
+      <p class="list-empty" id="list-empty" hidden>No chats yet.</p>
+    </nav>
 
-  <section class="categories" aria-label="Covered legal topics">
-    <span>FOCUS AREAS:</span>
-    <ul id="category-list"></ul>
-  </section>
-
-  <section class="case-log" id="case-log">
-    <div class="entry system">
-      <div class="entry-head">
-        <span class="docket">SYSTEM&nbsp;000</span>
-        <span class="tag">WELCOME</span>
-      </div>
-      <p>Type your question in plain English — for example, <em>“My landlord won't return my security deposit.”</em> I’ll search through records to find the best guidance for you.</p>
+    <div class="sidebar-foot">
+      <span>Saved in this browser only</span>
     </div>
-  </section>
+  </aside>
 
-  <form class="composer" id="composer" autocomplete="off">
-    <textarea id="question" placeholder="Ask your legal question..." rows="1" required></textarea>
-    <button type="submit" id="send-btn" aria-label="Send question">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-      </svg>
-    </button>
-  </form>
+  <main class="main">
+    <header class="main-head">
+      <button type="button" class="icon-btn drawer-open" id="drawer-open" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </button>
+      <h1 id="chat-title">Your own AI-Lawyer</h1>
+    </header>
 
-  <p class="disclaimer">This tool provides general information and is not formal legal advice. Always consult a qualified lawyer for serious matters.</p>
+    <div class="thread" id="thread">
+      <div class="thread-inner">
 
-</main>
+        <section class="intro" id="intro">
+          <div class="intro-seal">⚖</div>
+          <h2>Describe your legal situation</h2>
+          <p class="intro-lede">
+            Write it in plain English, the way you'd explain it to a friend — for example,
+            <em>“my landlord won't return my security deposit.”</em>
+            LegalLens finds the closest guidance in its knowledge base and shows you how
+            strong the match is.
+          </p>
+
+          <div class="intro-facts">
+            <div class="fact">
+              <span class="fact-key">Answers come from</span>
+              <span class="fact-val">a curated knowledge base — nothing is generated or invented.</span>
+            </div>
+            <div class="fact">
+              <span class="fact-key">When two answers fit</span>
+              <span class="fact-val">both are shown side by side for you to choose.</span>
+            </div>
+            <div class="fact">
+              <span class="fact-key">When nothing fits</span>
+              <span class="fact-val">it says so, instead of guessing.</span>
+            </div>
+          </div>
+
+          <p class="intro-topics-label">Topics covered</p>
+          <ul class="intro-topics" id="category-list"></ul>
+        </section>
+
+        <section class="case-log" id="case-log" aria-live="polite"></section>
+
+      </div>
+    </div>
+
+    <div class="composer-dock">
+      <form class="composer" id="composer" autocomplete="off">
+        <textarea id="question" placeholder="Type about your law case…" rows="1" required></textarea>
+        <button type="submit" id="send-btn" aria-label="Send question">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+          </svg>
+        </button>
+      </form>
+      <p class="disclaimer">General information only — not formal legal advice. Consult a qualified lawyer for serious matters.</p>
+    </div>
+  </main>
+
+</div>
 
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>

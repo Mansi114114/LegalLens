@@ -19,5 +19,8 @@ venv/
 embedding/
 embedding/*.bin
 
+# FastEmbed ONNX model cache (~87 MB, re-downloaded by build_embeddings.py)
+.fastembed_cache/
+
 # Logs
 *.log

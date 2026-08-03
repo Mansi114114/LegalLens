@@ -61,15 +61,15 @@ Criminal defence,I need help understanding the charges filed against me.
 Criminal defence,I was detained by police and don't know what happens next.
 Property dispute,Someone has occupied my land illegally.
 Property dispute,My neighbour is threatening me over a property boundary dispute.
-Property dispute,My siblings are refusing to give me my share of ancestral property.
+Inheritance & succession,My siblings are refusing to give me my share of ancestral property.
 Property dispute,A builder is delaying possession of my flat.
 Property dispute,My tenant is refusing to vacate the property.
 Property dispute,Someone forged documents to sell my property.
-Property dispute,I want to challenge a will that excluded me unfairly.
+Inheritance & succession,I want to challenge a will that excluded me unfairly.
 Property dispute,My property was sold without my consent by a family member.
 Property dispute,My cousin is claiming rights over property that belongs to me.
 Property dispute,A construction company built on part of my plot without permission.
-Property dispute,There's a dispute over inherited land between family members.
+Inheritance & succession,There's a dispute over inherited land between family members.
 Property dispute,My tenant stopped paying rent and won't leave.
 Consumer complaint,I bought a defective phone.
 Consumer complaint,An online store refuses to refund a cancelled order.
@@ -219,20 +219,20 @@ Criminal defence,i got falsely accused of a crime
 Criminal defence,need bail help urgently
 Property dispute,someone occupied my land illegally
 Property dispute,neighbor threatening me over property boundary
-Property dispute,siblings wont give my share of property
+Inheritance & succession,siblings wont give my share of property
 Property dispute,builder delaying possession of my flat
 Property dispute,tenant refusing to vacate my property
 Property dispute,someone forged documents to sell my property
-Property dispute,want to challenge a will that excluded me
+Inheritance & succession,want to challenge a will that excluded me
 Property dispute,property sold without my consent
 Property dispute,co owner wants to sell but i disagree
-Property dispute,want to partition ancestral property
+Inheritance & succession,want to partition ancestral property
 Property dispute,property tax has wrong owner name
 Property dispute,contractor did bad construction work
 Property dispute,my rented property is being sold
-Property dispute,someone using fake will to claim my property
+Inheritance & succession,someone using fake will to claim my property
 Property dispute,neighbor encroaching on my land
-Property dispute,brother trying to sell our fathers house
+Inheritance & succession,brother trying to sell our fathers house
 Consumer complaint,bought a defective phone
 Consumer complaint,online store wont refund cancelled order
 Consumer complaint,overcharged by a service provider
@@ -344,11 +344,11 @@ Criminal defence,My case was dismissed but it's still showing on my record.
 Criminal defence,I received a notice to appear in court but I'm out of town.
 Criminal defence,The police are pressuring me to confess to something I didn't do.
 Property dispute,My co-owner wants to sell the property but I don't agree.
-Property dispute,I want to know if I can legally partition ancestral property.
+Inheritance & succession,I want to know if I can legally partition ancestral property.
 Property dispute,My property tax records show the wrong owner name.
 Property dispute,A contractor did substandard construction work on my property.
 Property dispute,I want to know my rights if my rented property is being sold.
-Property dispute,Someone is claiming ownership of my property using a fake will.
+Inheritance & succession,Someone is claiming ownership of my property using a fake will.
 Consumer complaint,An e-commerce site sent me the wrong product and won't exchange it.
 Consumer complaint,A warranty claim for my appliance was rejected without valid reason.
 Consumer complaint,I was charged hidden fees that weren't disclosed at purchase.
@@ -420,12 +420,12 @@ Criminal defence,"roommate stole my stuff, can i file a case even without proof"
 Criminal defence,Does a compromise with the complainant automatically close a criminal case?
 Criminal defence,"police confiscated my passport during an investigation, can they do that"
 Property dispute,builder handed over flat thats smaller than wat was promised
-Property dispute,cousin trying to sell ancestral land without asking any of us
+Inheritance & succession,cousin trying to sell ancestral land without asking any of us
 Property dispute,neighbour's construction is literally leaning into my plot
 Property dispute,"bought land turns out its under litigation, am i screwed"
 Property dispute,Can a power of attorney be used to sell property without the owner's direct consent?
 Property dispute,society refusing to transfer flat to my name after purchase
-Property dispute,Is oral partition of ancestral property legally valid without a registered deed?
+Inheritance & succession,Is oral partition of ancestral property legally valid without a registered deed?
 Property dispute,"landlord trying to sell the house i live in, do i have any say"
 Consumer complaint,food delivery app sent expired stuff n wont refund
 Consumer complaint,phone company charging random fees i never signed up for

@@ -36,7 +36,7 @@
     <section class="hero">
       <div class="hero-content">
         <div class="badge-live">
-          HYBRID SEARCH &bull; TF-IDF + SENTENCE TRANSFORMERS
+          HYBRID SEARCH &bull; TF-IDF + FASTEMBED
         </div>
         <h2>
           Describe your legal issue.<br />Get the
@@ -44,9 +44,9 @@
         </h2>
         <p class="lede">
           LegalLens classifies your legal question, retrieves the most relevant
-          guidance using hybrid search (TF-IDF + Sentence Transformers),
-          normalizes similarity scores, and ranks results to provide accurate
-          legal assistance.
+          guidance using hybrid search (TF-IDF + semantic embeddings), and
+          ranks results to provide accurate legal assistance — and says so
+          plainly when a question is out of scope or too close to call.
         </p>
         <div class="hero-actions">
           <a class="btn-primary" href="{{ url_for('assistant_page') }}">
@@ -121,9 +121,9 @@
         <div class="categories-head">
           <span class="label">Focus areas</span>
           <span class="sub"
-            >Search starts within the predicted legal category. If no strong
-            match is found, LegalLens expands the search across all legal
-            categories.</span
+            >LegalLens searches the full knowledge base every time, giving
+            your predicted category a slight preference — so a
+            confident-but-wrong guess can never hide the right answer.</span
           >
         </div>
         <div class="chip-row">
@@ -158,9 +158,9 @@
           <div class="num">02 — HYBRID RETRIEVAL</div>
           <h3>Hybrid Retrieval</h3>
           <p>
-            TF-IDF retrieves keyword matches while Sentence Transformers capture
-            semantic meaning. Both similarity scores are normalized and combined
-            using weighted scoring to rank the most relevant legal guidance..
+            TF-IDF retrieves keyword matches while semantic embeddings capture
+            meaning. The two scores are combined on their raw scale (40%
+            TF-IDF, 60% semantic) to rank the most relevant legal guidance.
           </p>
         </div>
         <div class="step">
@@ -168,8 +168,10 @@
           <h3>Retrieve Relevant Guidance</h3>
           <p>
             LegalLens returns the highest-ranked legal guidance together with
-            its category,similarity score, and additional relevant results when
-            available.
+            its category, similarity score, and additional relevant results.
+            If two answers are equally close, both are shown so you can pick.
+            If your question isn't a legal one it covers, it says so instead
+            of guessing.
           </p>
         </div>
       </div>

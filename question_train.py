@@ -49,6 +49,11 @@ def build_pipeline():
         )),
         ("clf", LogisticRegression(
             max_iter=1000,
+            # The categories aren't evenly sized (relabelling the misfiled
+            # inheritance questions left "Property dispute" smaller than the
+            # rest). Without this, the smaller classes get systematically
+            # under-predicted.
+            class_weight="balanced",
         ))
     ])
     return pipeline

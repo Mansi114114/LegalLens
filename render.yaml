@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: legallens
+    runtime: python
+    plan: free
+    # build_embeddings.py is part of the BUILD, not an afterthought: it warms
+    # .fastembed_cache/ with the ~87 MB MiniLM ONNX model. Without it FastEmbed
+    # falls back to /tmp, which is ephemeral here, so the model is re-downloaded
+    # on every cold start before the first user can get an answer.
+    buildCommand: pip install -r requirements.txt && python build_embeddings.py
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: FASTEMBED_CACHE_DIR
+        value: /opt/render/project/src/.fastembed_cache

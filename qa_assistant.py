@@ -4,19 +4,23 @@
 Legal QA Assistant — retrieval engine.
 
 Pipeline:
-  1. Classify the question into a legal category (with confidence).
-  2. Search the knowledge base for the closest matching question(s)
-     using TF-IDF + cosine similarity.
-  3. If the category-filtered search comes up empty (or the classifier
-     wasn't confident), fall back to searching the *entire* knowledge
-     base instead of giving up.
-  4. De-duplicate near-identical "(Scenario N)" variants so the same
+  1. Reject small talk / non-legal input up front, so "hello" gets a
+     greeting instead of a fabricated case match.
+  2. Score the whole knowledge base in one pass: TF-IDF cosine +
+     FastEmbed (MiniLM) cosine, blended on their *raw* scales.
+  3. Decide whether the question is in scope at all, using absolute
+     similarity thresholds. Out of scope => say so, retrieve nothing.
+  4. Rank in-scope questions, nudging results in the classifier's
+     predicted category upward (a soft preference, not a hard filter).
+  5. De-duplicate near-identical "(Scenario N)" variants so the same
      answer isn't shown three times.
 """
 
 import os
 import re
 import json
+import threading
+
 import numpy as np
 
 
@@ -30,6 +34,32 @@ from question_classify import QuestionClassify
 
 _stemmer = PorterStemmer()
 _TOKEN_RE = re.compile(r"[a-zA-Z]+")
+
+# --- Embedding model -----------------------------------------------------
+
+EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+
+# FastEmbed defaults to /tmp, which is ephemeral on most PaaS hosts — so the
+# ~87 MB ONNX model gets re-downloaded on every cold start, before the first
+# user can get an answer. Cache it inside the project instead, so a build
+# step can warm it once and the running container just reads it off disk.
+EMBEDDING_CACHE_DIR = os.environ.get(
+    "FASTEMBED_CACHE_DIR",
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), ".fastembed_cache"),
+)
+
+
+def get_embedding_model():
+    """Build the FastEmbed model, downloading to the shared cache if needed.
+
+    Used by both the server and build_embeddings.py so the offline embedding
+    build and the runtime query encoder can never drift onto different
+    models (which would silently make every cosine score meaningless).
+    """
+    return TextEmbedding(
+        model_name=EMBEDDING_MODEL_NAME,
+        cache_dir=EMBEDDING_CACHE_DIR,
+    )
 
 # A small, hand-picked list of genuine function words (articles, pronouns,
 # prepositions, auxiliary verbs, conjunctions). Deliberately NOT using
@@ -56,19 +86,74 @@ _STOP_WORDS = {
 }
 _STEMMED_STOP_WORDS = sorted({_stemmer.stem(w) for w in _STOP_WORDS})
 
-# Minimum cosine similarity to accept a match at all.
-MIN_SCORE = 0.12
+# --- Scoring -------------------------------------------------------------
+#
+# IMPORTANT: these thresholds only mean anything because the two similarity
+# signals are blended on their RAW cosine scales. An earlier version min-max
+# normalised each signal before blending, which rescales the best candidate
+# in *every* search to exactly 1.0 no matter how bad it actually is. That
+# made the accept threshold unreachable-by-construction, so literally any
+# input — "hello", "pizza recipe" — came back as a confident case match.
+# Never re-introduce per-query normalisation here.
+TFIDF_WEIGHT = 0.4
+SEMANTIC_WEIGHT = 0.6
 
-# Minimum classifier confidence before we trust the predicted category
-# enough to filter the search space with it. Below this we just search
-# everything, which is safer than filtering on a shaky guess.
+# Minimum blended (raw) score to show a match at all.
+MIN_SCORE = 0.40
+
+# Scope gate. A question is only answered if it is genuinely close to
+# something in the knowledge base. The numbers below are measured, not
+# guessed: over a probe set of off-topic input ("hello", "pizza recipe",
+# "how to learn python") the best semantic cosine peaked at 0.36, while
+# real legal questions bottomed out at 0.66. 0.45 sits in that gap.
+IN_SCOPE_SEMANTIC = 0.45
+
+# TF-IDF alone can rescue an oddly-phrased question the embedding misses,
+# but only on strong literal overlap. Short off-topic queries pick up
+# surprisingly high TF-IDF cosine from a single shared rare word ("who won
+# the world cup" scored 0.29), so this bar is set above that noise floor.
+IN_SCOPE_TFIDF = 0.55
+
+# Above this, the top match is close enough to present without hedging.
+CONFIDENT_SEMANTIC = 0.60
+
+# When the top two candidates land within this much of each other, the gap
+# between them isn't meaningful signal — they're competing readings of the
+# same question ("family member sold my property" vs "someone forged
+# documents to sell my property"). Ranking one above the other implies a
+# confidence the scores don't support, so the user is asked to pick instead.
+AMBIGUITY_MARGIN = 0.08
+
+# Minimum classifier confidence before its predicted category is allowed to
+# influence ranking at all. With 13 categories a uniform guess is ~0.077, so
+# anything near that carries no information.
 MIN_TYPE_CONFIDENCE = 0.22
 
-# Even when the classifier isn't confident enough to hard-filter the search
-# (above), its top guess is still informative — used as a small tiebreaker
-# bonus when ranking widened/fallback search results, so a near-tied but
-# coincidental keyword overlap in the wrong category doesn't win outright.
-CLASSIFIER_TIEBREAK_BOOST = 0.05
+# The predicted category is a soft preference, not a filter: matches in it
+# get a small ranking bonus so a coincidental keyword overlap in the wrong
+# category doesn't win a near-tie outright.
+CATEGORY_BOOST = 0.05
+
+# Small talk and pleasantries. These deserve a real reply rather than being
+# pushed through retrieval and dressed up as legal guidance.
+GREETING_RE = re.compile(
+    r"^[\s!.,?]*("
+    r"hi|hii+|hey|hello+|yo|hola|namaste|greetings|sup|wass?up|"
+    r"good\s+(morning|afternoon|evening|night)|"
+    r"how\s+(are|r)\s+(you|u)|how'?s\s+it\s+going|what'?s\s+up|"
+    r"thanks?|thank\s+you|thx|ty|nice|cool|ok(ay)?|yes|no|yep|nope|"
+    r"bye|goodbye|see\s+(you|ya)|good\s?bye|"
+    r"who\s+are\s+you|what\s+(can\s+you\s+do|are\s+you)|help"
+    r")[\s!.,?]*$",
+    re.IGNORECASE,
+)
+
+GREETING_REPLY = (
+    "Hello. I'm LegalLens — I look up general legal information for everyday "
+    "situations in India. Describe what happened in a sentence or two and I'll "
+    "find the closest guidance I have. For example: \"my landlord is refusing to "
+    "return my security deposit\" or \"I was fired without notice\"."
+)
 
 
 SCENARIO_SUFFIX_RE = re.compile(r"\s*\(Scenario\s*\d+\)\s*$", re.IGNORECASE)
@@ -108,6 +193,20 @@ def _stem_tokenize(text: str):
 def _clean_display_question(q: str) -> str:
     """Strip the internal '(Scenario N)' suffix used for training variety."""
     return SCENARIO_SUFFIX_RE.sub("", q).strip()
+
+
+def _known_topics_sentence(types) -> str:
+    """Render the covered categories as a readable 'a, b and c.' list.
+
+    Derived from the knowledge base rather than hard-coded, so adding a
+    category to qa_pairs.json can't leave this message out of date.
+    """
+    topics = [t.lower() for t in types if t]
+    if not topics:
+        return "a range of everyday legal topics."
+    if len(topics) == 1:
+        return f"{topics[0]}."
+    return ", ".join(topics[:-1]) + f" and {topics[-1]}."
 
 
 # Generic fallback advice per legal category, used only when we truly
@@ -158,6 +257,14 @@ GENERIC_ADVICE = {
         "Keep copies of admission forms, fee receipts, and correspondence with the institution.",
         "Consult a lawyer or approach the relevant education regulatory body.",
     ],
+    "Inheritance & succession": [
+        "Gather the will (if any), death certificate, and property/title documents.",
+        "Consult a lawyer about obtaining a succession or legal heir certificate, or probate of the will.",
+    ],
+    "Insurance claims": [
+        "Keep the policy document, claim forms, and all correspondence with the insurer.",
+        "If the claim is wrongly rejected, escalate to the insurer's grievance officer, then the Insurance Ombudsman.",
+    ],
 }
 
 
@@ -193,21 +300,53 @@ class QAAssistant:
             sublinear_tf=True,
         )
         self.question_matrix = self.vectorizer.fit_transform(self._retrieval_texts)
+
+        # Pre-computed (already L2-normalised) MiniLM embeddings, one row per
+        # entry in qa_pairs.json. Built offline by build_embeddings.py so the
+        # server never has to embed the corpus at startup.
+        emb_path = os.path.join(cur, "data", "question_embeddings.npy")
+        if not os.path.exists(emb_path):
+            raise FileNotFoundError(
+                f"Embeddings file not found: {emb_path}\n"
+                f"Please run build_embeddings.py first."
+            )
+        self.question_embeddings = np.load(emb_path)
+
+        # A stale .npy (qa_pairs.json edited without rebuilding) would silently
+        # pair questions with the wrong vectors and quietly poison every
+        # result, so fail loudly instead.
+        if len(self.question_embeddings) != len(self.qa_pairs):
+            raise ValueError(
+                f"Embeddings are stale: {len(self.question_embeddings)} vectors "
+                f"for {len(self.qa_pairs)} QA pairs. Re-run build_embeddings.py."
+            )
+
         self.embedding_model = None
-        self.question_embeddings = np.load("data/question_embeddings.npy")
+        self._embedding_lock = threading.Lock()
         self.type_classifier = QuestionClassify()
         self.known_types = sorted(set(self.types))
-    
-    def load_embeddings(self):
-        print("load_embeddings called")
-        print("Before:", self.embedding_model)
 
+        # Boolean mask per category, used for the soft ranking preference.
+        self._types_arr = np.array(self.types)
+
+    def load_embeddings(self):
+        """Lazily construct the ONNX embedding model on first use.
+
+        Deferred rather than done in __init__ so the web process boots (and
+        starts serving the landing page) without paying the model load, which
+        matters on small containers with a startup timeout.
+
+        Locked because gunicorn is commonly run with threaded workers: two
+        concurrent first-requests would otherwise both build a model, briefly
+        holding two copies in memory — enough to OOM a 512 MB instance.
+        """
         if self.embedding_model is None:
-          print("Loading model...")
-          self.embedding_model = TextEmbedding(
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
-        )
-          print("Model created:", self.embedding_model)
+            with self._embedding_lock:
+                # Re-check inside the lock: another thread may have finished
+                # building it while this one was waiting.
+                if self.embedding_model is None:
+                    self.embedding_model = get_embedding_model()
+        return self.embedding_model
 
     # -- internal helpers -------------------------------------------------
 
@@ -223,40 +362,30 @@ class QAAssistant:
             # Classifier has no predict_proba; fall back to a plain predict.
             return model.predict([user_question])[0], 1.0
 
-    def _rank(self, user_question, user_vec, indices, top_k):
-        self.load_embeddings()
-        if not indices:
-            return []
+    def _score_all(self, user_question, user_vec):
+        """Score every knowledge-base entry against the question.
 
-        # TF-IDF similarity
-        sub_matrix = self.question_matrix[indices]
-        tfidf_scores = cosine_similarity(user_vec, sub_matrix)[0]
+        Returns (tfidf_scores, semantic_scores, blended_scores) as raw
+        cosine similarities — deliberately NOT rescaled per query, so the
+        thresholds above stay comparable across different questions.
 
-        # Sentence Transformer similarity
-        query_embedding = next(self.embedding_model.embed([user_question]))
+        The corpus is a couple of hundred rows, so scoring all of it costs
+        one small mat-vec; there's no reason to pre-filter by category and
+        then need a second pass when the filter comes up empty.
+        """
+        tfidf_scores = cosine_similarity(user_vec, self.question_matrix)[0]
 
-        sub_embeddings = self.question_embeddings[indices]
+        model = self.load_embeddings()
+        query_embedding = next(model.embed([user_question]))
         query_embedding = query_embedding / (np.linalg.norm(query_embedding) + 1e-8)
+        semantic_scores = self.question_embeddings @ query_embedding
 
-        semantic_scores = np.dot(sub_embeddings,query_embedding)
-        
-        tfidf_scores = (tfidf_scores - tfidf_scores.min()) / ( tfidf_scores.max() - tfidf_scores.min() + 1e-8)
-        semantic_scores = (semantic_scores - semantic_scores.min()) / (semantic_scores.max() - semantic_scores.min() + 1e-8)
-        # Weighted score
-        final_scores = (
-            0.4 * tfidf_scores +
-            0.6 * semantic_scores
-        )
-        print("TF-IDF:", tfidf_scores[:5])
-        print("Semantic:", semantic_scores[:5])
-        # print("Final:", final_scores[:5])  
+        # Cosine can go negative for genuinely opposed text; clamp so a
+        # negative semantic score can't drag a blend below zero.
+        semantic_scores = np.clip(semantic_scores, 0.0, None)
 
-        order = np.argsort(final_scores)[::-1][:top_k]
-
-        return [
-            (indices[i], float(final_scores[i]))
-            for i in order
-        ]
+        blended = TFIDF_WEIGHT * tfidf_scores + SEMANTIC_WEIGHT * semantic_scores
+        return tfidf_scores, semantic_scores, blended
 
     def _dedupe(self, ranked):
         """Collapse results that share the same answer text (scenario variants)."""
@@ -272,6 +401,13 @@ class QAAssistant:
                 "question": _clean_display_question(item["question"]),
                 "type": item.get("type", ""),
                 "answers": item.get("answers", []),
+                # Optional structured citations on a QA pair, e.g.
+                #   "acts": ["Consumer Protection Act, 2019"],
+                #   "sections": ["S. 35"]
+                # Passed straight through when present so the knowledge base
+                # can grow citations without touching the retrieval code.
+                "acts": item.get("acts", []),
+                "sections": item.get("sections", []),
                 "score": score,
             })
         return results
@@ -279,102 +415,135 @@ class QAAssistant:
     # -- public API ---------------------------------------------------------
 
     def search(self, user_question: str, top_k: int = 3):
-        user_question = (user_question or "").strip()
-        if not user_question:
-            return "Empty question", [], False
+        """Retrieve matches for a question already known to be in scope.
 
+        Returns (predicted_type, results, in_scope, confidence, best_semantic).
+        """
         predicted_type, confidence = self._predict_type(user_question)
         user_vec = self.vectorizer.transform([_strip_boilerplate(user_question)])
 
-        # 1) Try within the predicted category, but only trust the category
-        #    filter if the classifier is reasonably confident.
-        ranked = []
+        tfidf_scores, semantic_scores, blended = self._score_all(user_question, user_vec)
+
+        best_semantic = float(semantic_scores.max())
+        best_tfidf = float(tfidf_scores.max())
+
+        # Scope gate. Nothing in the knowledge base is even loosely related,
+        # so there is no honest match to return — and inventing one is how
+        # "hello" used to come back as a consumer complaint.
+        if best_semantic < IN_SCOPE_SEMANTIC and best_tfidf < IN_SCOPE_TFIDF:
+            return predicted_type, [], False, confidence, best_semantic
+
+        # Soft category preference: nudge, don't filter. If the classifier is
+        # no better than a coin flip across 13 classes, ignore it entirely.
+        ranking = blended.copy()
         if confidence >= MIN_TYPE_CONFIDENCE:
-            type_indices = [i for i, t in enumerate(self.types) if t == predicted_type]
-            ranked = [
-                (i, s)
-                for i, s in self._rank(
-                    user_question,
-                    user_vec,
-                    type_indices,
-                    top_k * 2
-                )
-                if s >= MIN_SCORE
-            ]
+            ranking = ranking + CATEGORY_BOOST * (self._types_arr == predicted_type)
 
-        # 2) If that found nothing, widen the search to the whole knowledge base.
-        used_fallback = False
-        if not ranked:
-            all_indices = list(range(len(self.questions)))
-            ranked = [(i, s) for i, s in self._rank(user_question, user_vec, all_indices, top_k * 2) if s >= MIN_SCORE]
-            used_fallback = True
-
-            if ranked:
-                # The classifier's top guess is still useful signal here even
-                # though it wasn't confident enough to hard-filter on above —
-                # use it as a small tiebreaker so a near-tied but off-topic
-                # keyword overlap doesn't win purely by coincidence (e.g. a
-                # scholarship question narrowly losing to an unrelated
-                # traffic-accident question that happens to share "cancelled").
-                def _ranking_key(pair):
-                    i, s = pair
-                    boost = CLASSIFIER_TIEBREAK_BOOST if self.types[i] == predicted_type else 0.0
-                    return s + boost
-
-                ranked.sort(key=_ranking_key, reverse=True)
-
-                # Don't pad the result out with unrelated categories just
-                # because they cleared the bar too — keep only results that
-                # share the best match's category, or are nearly as strong a
-                # match (using the same boosted comparison for consistency).
-                top_type = self.types[ranked[0][0]]
-                top_boosted = _ranking_key(ranked[0])
-                ranked = [
-                    (i, s) for i, s in ranked
-                    if self.types[i] == top_type or _ranking_key((i, s)) >= top_boosted - 0.05
-                ]
+        order = np.argsort(ranking)[::-1][: top_k * 3]
+        ranked = [(int(i), float(blended[i])) for i in order if blended[i] >= MIN_SCORE]
 
         results = self._dedupe(ranked)[:top_k]
-        return predicted_type, results, used_fallback, confidence
+
+        # `ranked` is ordered by the boosted score, but each result carries its
+        # raw score for display. Those two can disagree, which would render a
+        # list whose visible numbers aren't descending. Keep the boost's pick
+        # of the primary result, and order the remainder by what's shown.
+        #
+        # The primary itself can't be "wrong" this way: overtaking on a 0.05
+        # boost requires a raw gap under 0.05, and anything inside
+        # AMBIGUITY_MARGIN is handed to the user as a choice rather than
+        # ranked at all.
+        if len(results) > 2:
+            results[1:] = sorted(results[1:], key=lambda r: r["score"], reverse=True)
+
+        return predicted_type, results, True, confidence, best_semantic
 
     def answer(self, user_question: str, top_k: int = 3):
         """High level convenience method returning a ready-to-display payload."""
-        predicted_type, results, used_fallback, confidence = self.search(user_question, top_k=top_k)
+        user_question = (user_question or "").strip()
 
-        if results:
-            # If we had to widen the search past the classifier's guess, the
-            # matched result's own category is more trustworthy to display
-            # than the classifier's shaky first guess.
-            display_type = results[0]["type"] if used_fallback else predicted_type
+        if not user_question:
             return {
-                "type": display_type,
-                "confident": not used_fallback,
-                "results": results,
-                "note": None,
+                "kind": "empty",
+                "type": None,
+                "confident": False,
+                "results": [],
+                "note": "Please describe your legal issue.",
+                "generic_advice": [],
             }
 
-        # Nothing matched closely enough anywhere. If the classifier itself
-        # wasn't even meaningfully more confident than a random guess, the
-        # question is likely outside what this knowledge base covers at all —
-        # don't dress that up as category-specific legal advice.
-        if confidence < MIN_TYPE_CONFIDENCE:
+        # Small talk never reaches retrieval.
+        if GREETING_RE.match(user_question):
             return {
+                "kind": "greeting",
+                "type": None,
+                "confident": False,
+                "results": [],
+                "note": GREETING_REPLY,
+                "generic_advice": [],
+            }
+
+        predicted_type, results, in_scope, confidence, best_semantic = self.search(
+            user_question, top_k=top_k
+        )
+
+        if not in_scope:
+            return {
+                "kind": "out_of_scope",
                 "type": None,
                 "confident": False,
                 "results": [],
                 "note": (
-                    "I couldn't match this to a legal topic in my knowledge base "
-                    "(marriage & family, labour, traffic accidents, debt, criminal defence, "
-                    "property, consumer complaints, cybercrime, medical negligence, "
-                    "housing/tenancy, or education disputes). Try rephrasing your question "
-                    "with more detail."
+                    "That doesn't look like a legal question I can help with. I cover "
+                    + _known_topics_sentence(self.known_types)
+                    + " Describe your situation in a sentence or two and I'll look for "
+                    "the closest guidance I have."
                 ),
                 "generic_advice": [],
             }
 
-        fallback_advice = GENERIC_ADVICE.get(predicted_type)
+        if len(results) >= 2 and (results[0]["score"] - results[1]["score"]) <= AMBIGUITY_MARGIN:
+            # Too close to call. Hand the decision to the user, who knows
+            # which reading fits their situation, instead of presenting an
+            # arbitrary winner as though the ranking were decisive.
+            options = results[:2]
+            shared_type = (
+                options[0]["type"] if options[0]["type"] == options[1]["type"] else None
+            )
+            return {
+                "kind": "choice",
+                "type": shared_type,
+                "confident": False,
+                "results": options,
+                "note": (
+                    "Two entries match your question about equally well. Pick whichever "
+                    "describes your situation more closely."
+                ),
+                "generic_advice": [],
+            }
+
+        if results:
+            # Display the matched entry's own category rather than the
+            # classifier's guess — the match is the stronger evidence.
+            return {
+                "kind": "match",
+                "type": results[0]["type"] or predicted_type,
+                "confident": best_semantic >= CONFIDENT_SEMANTIC,
+                "results": results,
+                "note": (
+                    None if best_semantic >= CONFIDENT_SEMANTIC else
+                    "No close match — these are the nearest topics I have, so treat "
+                    "them as background rather than an answer to your exact situation."
+                ),
+                "generic_advice": [],
+            }
+
+        # In scope (related to something we cover) but nothing cleared the bar
+        # for showing a specific answer. Offer category-level guidance instead.
+        fallback_advice = GENERIC_ADVICE.get(predicted_type) if confidence >= MIN_TYPE_CONFIDENCE else None
         return {
-            "type": predicted_type,
+            "kind": "no_match",
+            "type": predicted_type if fallback_advice else None,
             "confident": False,
             "results": [],
             "note": (
@@ -382,7 +551,8 @@ class QAAssistant:
                 "but here is general guidance for this category."
                 if fallback_advice else
                 "I couldn't find a matching question in the knowledge base. "
-                "Try rephrasing, or consult a lawyer for advice specific to your situation."
+                "Try rephrasing with more detail about what happened, or consult a "
+                "lawyer for advice specific to your situation."
             ),
             "generic_advice": fallback_advice or [],
         }
@@ -402,10 +572,10 @@ def main():
 
         payload = assistant.answer(q)
 
-        print("\nPredicted type:", payload["type"])
+        print(f"\n[{payload['kind']}] type:", payload["type"])
 
         if payload["results"]:
-            label = "Top answers:" if payload["confident"] else "Closest matches found (broadened search):"
+            label = "Top answers:" if payload["confident"] else "Nearest topics (no close match):"
             print(label)
             for i, item in enumerate(payload["results"], 1):
                 print(f"\nCandidate {i} (score={item['score']:.3f}, type={item['type']})")

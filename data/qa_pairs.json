@@ -379,7 +379,7 @@
   },
   {
     "question": "My siblings are refusing to give me my share of ancestral property.",
-    "type": "Property dispute",
+    "type": "Inheritance & succession",
     "answers": [
       "Gather property and succession documents establishing your inheritance rights.",
       "Consult a property lawyer about filing a partition suit if the matter can't be resolved amicably.",
@@ -415,7 +415,7 @@
   },
   {
     "question": "I want to challenge a will that excluded me unfairly.",
-    "type": "Property dispute",
+    "type": "Inheritance & succession",
     "answers": [
       "Consult a lawyer about grounds to contest a will, such as undue influence, fraud, or lack of capacity.",
       "Gather evidence about the circumstances in which the will was made.",
@@ -1072,7 +1072,7 @@
   },
   {
     "question": "I want to know if I can legally partition ancestral property.",
-    "type": "Property dispute",
+    "type": "Inheritance & succession",
     "answers": [
       "Consult a property lawyer about filing a partition suit for your rightful share.",
       "Gather property records and proof of your relationship to the original owner.",
@@ -1108,7 +1108,7 @@
   },
   {
     "question": "Someone is claiming ownership of my property using a fake will.",
-    "type": "Property dispute",
+    "type": "Inheritance & succession",
     "answers": [
       "Consult a property lawyer immediately about challenging the fraudulent will in court.",
       "Gather all your original ownership documents and any evidence of forgery.",
